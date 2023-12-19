@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="/static/misc/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="/static/misc/favicon.ico" type="image/x-icon"/>
+    <meta property="og:title" content="E-Perpus" />
+    <meta property="og:description" content="Anda dapat menikmati koleksi buku digital yang kaya dan beragam, mencakup berbagai genre, penulis terkenal, dan topik menarik." />
+    <meta property="og:image" content="/static/misc/buku.jpg" />
+    
+    <title>E-Perpus</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Style CSS -->
+    <link href="{{ url_for('static', filename='user/style.css') }}" rel="stylesheet">
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <!-- Feather Icon -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha384-l2VRKbYi1aGRZ5oxk/xDeQPQq5Ffmvj8ZkKW1D5FA7kFeM4M6F7L/lUn2P5xkiM+T" crossorigin="anonymous">
+    <script>
+        $(document).ready(function () {
+            show_daftar();
+        });
+        // function show_daftar() {
+        //     $('#cards-box').empty();
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "/daftar_peminjaman",
+        //         data: {},
+        //         success: function (response) {
+        //             let rows_book = response['books'];
+        //             let rows_peminjaman = response['peminjaman'];
+        //             for (let i = 0; i < rows_peminjaman.length; i++) {
+        //                 for (let j = 0; j < rows_book.length; j++) {
+        //                     if (rows_peminjaman[i]['book_id'] === rows_book[j]['_id']) {
+        //                         let id = rows_peminjaman[i]['_id'];
+        //                         let title = rows_book[j]['title'];
+        //                         let nama = rows_peminjaman[i]['nama'];
+        //                         let tgl_pinjam = rows_peminjaman[i]['tgl_pinjam'];
+        //                         let status = rows_peminjaman[i]['status'];
+        //                         let temp_html = '';
+        //                         if (status === 0) {
+        //                             temp_html = `<div class="card mb-3 mx-auto pointer-cursor" style="max-width: 900px;" data-bs-toggle="modal"
+        //                 data-bs-target="">
+        //                 <div class="row g-0">
+        //                     <div class="col-8 col-md-9 col-lg-10">
+        //                         <div class="card-body">
+        //                             <h5 class="card-title">${nama}</h5>
+        //                             <p class="card-text fw-bold">${title}</p>
+        //                             <p class="card-text fw-bold"> Tanggal Pinjam : <small
+        //                                     class="text-muted">${tgl_pinjam}</small>
+        //                             </p>
+        //                         </div>
+        //                     </div>
+        //                     <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center">
+        //                         <div class="card-body">
+        //                             <button type="button" class="btn btn-outline-warning btnriwayat shadow-sm"
+        //                                 onclick="showInfo('${id}')">Details</button>
+        //                         </div>
+        //                         </div>
+        //                         </div>
+        //                         </div>`;
+        //                         } else {
+        //                             temp_html = `<div class="card mb-3 mx-auto pointer-cursor" style="max-width: 900px;" data-bs-toggle="modal"
+        //                 data-bs-target="">
+        //                 <div class="row g-0">
+        //                     <div class="col-8 col-md-9 col-lg-10">
+        //                         <div class="card-body">
+        //                             <h5 class="card-title">${nama}</h5>
+        //                             <p class="card-text fw-bold">${title}</p>
+        //                             <p class="card-text fw-bold"> Tanggal Pinjam : <small
+        //                                     class="text-muted">${tgl_pinjam}</small>
+        //                             </p>
+        //                         </div>
+        //                     </div>
+        //                     <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center">
+        //                         <div class="card-body">
+        //                             <button type="button" class="btn btn-outline-success btnriwayat shadow-sm"
+        //                                 onclick="showInfo('${id}')">Success</button>
+        //                         </div>
+        //                         </div>
+        //                         </div>
+        //                         </div>`;
+        //                         }
+
+        //                         $('#cards-box').append(temp_html);
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     });
+        // }
+
+        function showInfo(bookId) {
+            $.ajax({
+                type: "GET",
+                url: `/info`,
+                data: { bookId: bookId },
+                success: function (response) {
+                    let book = response['book'];
+                    let peminjaman = response['peminjaman'];
+
+                    // Update modal deskripsi dengan informasi dari response
+                    $('#deskripsi .card-img-top').attr('src', '../' + book['sampul']);
+                    $('#deskripsi .card-title').text(book['judul']);
+                    $('#deskripsi .card-text-genre').text(`Genre: ${book['genre']}`);
+                    $('#deskripsi .card-text-tahun').text(`Tahun: ${book['tahun']}`);
+                    $('#deskripsi .card-text-penulis').text(`Penulis: ${book['pengarang']}`);
+                    $('#deskripsi .nama').val(`${peminjaman['nama']}`);
+                    $('#deskripsi .alamat').val(`${peminjaman['alamat']}`);
+                    $('#deskripsi .telp').val(`${peminjaman['no_telp']}`);
+                    $('#deskripsi .tgl-pinjam').val(`${peminjaman['tgl_pinjam']}`);
+                    $('#deskripsi .tgl-kembali').val(`${peminjaman['tgl_kembali']}`);
+                    $('#deskripsi .catatan').val(`${peminjaman['catatan']}`);
+                    
+                    // Ganti kondisi untuk menetapkan status
+                    if (peminjaman['status'] === 1 || peminjaman['status'] === 2 ) {
+                        $('#deskripsi .dropdown').addClass('is-hidden');
+                    } else {
+                        $('#deskripsi .dropdown').removeClass('is-hidden');
+                    }
+
+                    $('#deskripsi .accept').attr('onclick', `accept('${peminjaman['id']}')`);
+                    $('#deskripsi .reject').attr('onclick', `reject('${peminjaman['id']}')`);
+                    // Tampilkan modal deskripsi
+                    $('#deskripsi').addClass('is-active');
+                }
+            });
+        }
+
+        function accept(bookId) {
+            $.ajax({
+                type: "POST",
+                url: `/accept/${bookId}`,
+                data: { id_give: bookId },
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload();
+                }
+            });
+        }
+
+        function reject(bookId) {
+            $.ajax({
+                type: "POST",
+                url: `/reject/${bookId}`,
+                data: { id_give: bookId },
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload();
+                }
+            });
+        }
+
+        function logout() {
+        $.removeCookie('mytoken', { path: '/' });
+        alert('Signed out!');
+        window.location.href = "/login";
+    }
+    </script>
+</head>
+
+<body>
+    {% if user_info %}
+    {% if user_info.role == 'admin' %}
+        {% include 'navbar_check/navbar_admin.html' %}
+    {% elif user_info.role == 'member' %}
+        {% include 'navbar_check/navbar_member.html' %}
+    {% endif %}
+{% else %}
+    {% include 'navbar_check/navbar_viewer.html' %}
+{% endif %}
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-light navbar shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand text-primary" href="/">E-Perpus</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/buku_admin">Buku</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/peminjaman_admin">Peminjaman</a>
+                    </li>
+                    <li class="nav-item">
+                        <a onclick="logout()" style="border-radius: 20px;" class="btn btn-outline-dark py-2 px-3">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav> -->
+    <section class="artikel_area section_gap py-5" id="artikelsection" style="min-height:100vh">
+        <div class="container">
+            <div class="mb-5">
+                <h3 class="text-center fw-bold judulkategori">Daftar Peminjaman Buku</h3>
+
+                <hr class="mx-auto">
+            </div>
+            <div class="wrapper-riwayat" id="cards-box">
+            {% for data in combined_data %}
+                <div class="card mb-3 mx-auto pointer-cursor" style="max-width: 900px;" data-bs-toggle="modal"
+                    data-bs-target="">
+                    <div class="row g-0">
+                        <div class="col-8 col-md-9 col-lg-10">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ data['peminjaman']['nama'] }}</h5>
+                                <p class="card-text fw-bold">{{ data['book']['judul'] }}</p>
+                                <p class="card-text fw-bold"> Tanggal Pinjam : <small
+                                        class="text-muted">{{ data['peminjaman']['tgl_pinjam'] }}</small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center">
+                            <div class="card-body">
+                                {% if data['peminjaman']['status'] == 0 %}
+                                    <button type="button" class="btn btn-outline-warning btnriwayat shadow-sm"
+                                    onclick="showInfo(`{{ data['peminjaman']['id'] }}`)">Details</button>
+                                {% elif data['peminjaman']['status'] == 1 %}
+                                    <button type="button" class="btn btn-outline-success btnriwayat shadow-sm"
+                                    onclick="showInfo(`{{ data['peminjaman']['id'] }}`)">Approved</button>
+                                {% elif data['peminjaman']['status'] == 2 %}
+                                    <button type="button" class="btn btn-outline-danger btnriwayat shadow-sm"
+                                    onclick="showInfo(`{{ data['peminjaman']['id'] }}`)">Rejected</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+                            <div class="modal" id="deskripsi">
+                                <div class="modal-background" onclick="$('#deskripsi').removeClass('is-active')"></div>
+                                <div class="modal-content">
+                                    <div class="box">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <div class="field">
+                                                    <div class="row row-cols-1 row-cols-md-3 g-4" id="cards-box">
+                                                        <div class="col-md-4">
+                                                            <div class="card shadow h-100">
+                                                                <img src="https://books.google.co.id/books/content?id=FbI24xANEx0C&hl=id&pg=PP1&img=1&zoom=3&sig=ACfU3U1eiDcK4JPhiiv5u9_W0Gp7qd5N0A&w=1280"
+                                                                    class="card-img-top" style="height: 100%;">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title mb-2">Éclair : Pagi Terakhir
+                                                                        di Rusia</h5>
+                                                                    <p class="card-text">Genre : Romance</p>
+                                                                    <p>Penulis : Prisca Primasari</p>
+                                                                    <p>Tahun : 2011</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <h4>Detail Peminjaman</h4>
+                                                            <form>
+                                                                <div class="mb-3">
+                                                                    <input type="text" class="form-control nama" id="nama"
+                                                                        placeholder="Nama Lengkap"
+                                                                        style="border: 2px solid grey;"
+                                                                        value="Nama Lengkap" disabled>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <input type="text" class="form-control alamat" id="alamat"
+                                                                        placeholder="Alamat"
+                                                                        style="border: 2px solid grey;" value="Alamat"
+                                                                        disabled>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <input type="text" class="form-control telp" id="telp"
+                                                                        placeholder="No. Telepon"
+                                                                        style="border: 2px solid grey;"
+                                                                        value="No. Telepon" disabled>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="tgl_pinjam"
+                                                                        class="form-label">Tanggal Pinjam</label>
+                                                                    <input type="date" class="form-control tgl-pinjam" id="tgl_pinjam"
+                                                                        placeholder="Tanggal Pinjam"
+                                                                        style="border: 2px solid grey;" value="Pending"
+                                                                        disabled>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="tgl_kembali"
+                                                                        class="form-label">Tanggal Kembali</label>
+                                                                    <input type="date" class="form-control tgl-kembali" id="tgl_kembali"
+                                                                        placeholder="Tanggal Kembali"
+                                                                        style="border: 2px solid grey;" value="Pending"
+                                                                        disabled>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="catatan"
+                                                                        class="form-label">Catatan</label>
+                                                                        <br>
+                                                                    <textarea class="form-control catatan" placeholder="Catatan"
+                                                                        id="catatan"
+                                                                        style="height: 100px; border: 2px solid grey;"
+                                                                        value="Pending" disabled></textarea>
+                                                                </div>
+                                                                <hr class="mx-auto">
+                                                                <div class="dropdown btn-group">
+                                                                    <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                      Action
+                                                                    </button>
+                                                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                                                      <!-- <li><a class="dropdown-item active" href="#">Action</a></li> -->
+                                                                      <li><a class="dropdown-item active accept" href="#">Approve</a></li>
+                                                                      <li><a class="dropdown-item reject" href="#">Reject</a></li>
+                                                                      <!-- <li><hr class="dropdown-divider"></li> -->
+                                                                      <!-- <li><a class="dropdown-item" href="#">Separated link</a></li> -->
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- <div class="btn-group">
+                                                                    <button type="button" id="acceptButton" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                      Action
+                                                                    </button>
+                                                                    <div class="dropdown-menu">
+                                                                      <button class="dropdown-item accept" onclick="accept('${bookId}', 'Accept')">Accept</button>
+                                                                      <div class="dropdown-divider"></div>
+                                                                      <button class="dropdown-item reject" onclick="reject('${bookId}', 'Reject')">Reject</button>
+                                                                    </div>
+                                                                  </div> -->
+                                                                  
+                                                                <!-- <button type="submit" class="btn btn-outline-success" id="acceptButton"
+                                                                    onclick="accept('${bookId}')">Accept</button> -->
+                                                                    <hr/>
+                                                                <button type="submit" class="btn btn-outline-danger"
+                                                                    onclick="$('#deskripsi').removeClass('is-active')">CLOSE</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div>
+                    </div>
+                </div> -->
+            <!-- </div>
+        </div>
+    </section> -->
+
+    {% include 'footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

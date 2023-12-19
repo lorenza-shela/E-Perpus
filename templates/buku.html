@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="/static/misc/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="/static/misc/favicon.ico" type="image/x-icon"/>
+    <meta property="og:title" content="E-Perpus" />
+    <meta property="og:description" content="Anda dapat menikmati koleksi buku digital yang kaya dan beragam, mencakup berbagai genre, penulis terkenal, dan topik menarik." />
+    <meta property="og:image" content="/static/misc/buku.jpg" />
+
+    <title>E-Perpus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="{{ url_for('static', filename='user/buku.css') }}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <!-- Bulma CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    
+    <!-- Feather Icon -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    
+    <script>
+      $(document).ready(function () {
+      show_book();
+      search();
+      bsCustomFileInput.init()
+      });
+
+      function search() {
+        $('#input-name').on('input', function() {
+          let search = $(this).val().toLowerCase().trim();
+          $('#cards-box').children('.col').each(function() {
+              let cardTitle = $(this).find('.card-title').text().toLowerCase();
+              if (cardTitle.includes(search)) {
+                  $(this).show();
+              } else {
+                  $(this).hide();
+              }
+          });
+        });
+        // let search = $('#input-name').val().toLowerCase().trim();
+        //   $('#cards-box').children('.col').each(function() {
+        //       let cardTitle = $(this).find('.card-title').text().toLowerCase();
+        //       if (cardTitle.includes(search)) {
+        //           $(this).show();
+        //       } else {
+        //           $(this).hide();
+        //       }
+        //   });
+      }
+
+    function show_book() {
+      $('#cards-box').empty();
+      $.ajax({
+        type: "GET",
+        url: "/show_book",
+        data: {},
+        success: function (response) {
+          console.log(response)
+          let rows_book = response["books"];
+          for (let i = 0; i < rows_book.length; i++) {
+            let judul = rows_book[i]["judul"];
+            let genre = rows_book[i]["genre"];
+            let tahun = rows_book[i]["tahun"];
+            let pengarang = rows_book[i]["pengarang"];
+            let sampul = rows_book[i]["sampul"];
+            let id = rows_book[i]["id"];
+
+            let temp_html = `
+                    <div class="col">
+                        <div class="card shadow h-100">
+                            <img src="../${sampul}" class="card-buku">
+                            <div class="card-body">
+                                <h5 class="card-title mb-2">${judul}</h5>
+                                <p class="card-text">Genre : ${genre}</p>
+                                <p>Penulis : ${pengarang}</p>
+                                <p>Tahun : ${tahun}</p>
+                                <a href="/peminjaman/${id}" class="btn btn-primary col rounded-pill mt-3">Pinjam</a>
+                                <a onclick="showDescription(${id})" type="button" class="btn border-primary col rounded-pill" data-bs-toggle="modal" data-bs-target="#deskripsi">Deskripsi</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            $("#cards-box").append(temp_html);
+          }
+        },
+      });
+    }
+
+      // function search(){
+      //   $('#input-name').on('input', function() {
+      //     let searchText = $(this).val().toLowerCase().trim();
+      //     $('#cards-box .card').each(function() {
+      //       let cardTitle = $(this).find('.card-title').text().toLowerCase();
+      //       if (cardTitle.includes(searchText)) {
+      //           $(this).show();
+      //       } else {
+      //           $(this).hide();
+      //       }
+      //     });
+      //   });
+      // }
+
+      function showDescription(id) {
+          $.ajax({
+              type: "GET",
+              url: `/deskripsi/${id}`,
+              data: {},
+              success: function (response) {
+                  let book = response['book'];
+                  $('#deskripsi .card-img-top').attr('src', book['sampul']);
+                  $('#deskripsi .card-judul').text(book['judul']);
+                  $('#deskripsi .card-genre').text(`Genre: ${book['genre']}`);
+                  $('#deskripsi .card-tahun').text(`Tahun: ${book['tahun']}`);
+                  $('#deskripsi .card-penulis').text(`Penulis: ${book['pengarang']}`);
+                  $('#deskripsi .card-sinopsis').text(book['sinopsis']);
+                  $('#deskripsi .card-stok').text(`Stock: ${book['stok']}`);
+
+                  // Tampilkan modal deskripsi
+                  $('#deskripsi').addClass('is-active');
+              }
+          });
+        }
+
+      function logout() {
+        $.removeCookie('mytoken', { path: '/' });
+        alert('Signed out!');
+        window.location.href = "/login";
+      }
+    </script>
+</head>
+<body>
+  <!-- navbar -->
+  {% if user_info %}
+    {% if user_info.role == 'admin' %}
+        {% include 'navbar_check/navbar_admin.html' %}
+    {% elif user_info.role == 'member' %}
+        {% include 'navbar_check/navbar_member.html' %}
+    {% endif %}
+{% else %}
+    {% include 'navbar_check/navbar_viewer.html' %}
+{% endif %}
+
+<!-- BUKU PAGE -->
+<section class="artikel_area section_gap py-5" id="mycards" style="min-height:100vh">
+<div class="wrap">
+  <h2>PEMINJAMAN BUKU</h2>
+  <hr class="mx-auto">
+  <div class="search-box d-flex justify-content-center">
+    <input id="input-name" class="form-control rounded-pill" style="margin-right: 0.5rem" placeholder="Cari buku...">
+    <i data-feather="search" style="color: dodgerblue;"></i>
+  </div>
+</div>
+
+<!-- Card -->
+  <div class="mycards">
+    <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+      <!-- <div class="col">
+          <div class="card shadow h-100">
+              <img src="https://books.google.co.id/books/content?id=FbI24xANEx0C&hl=id&pg=PP1&img=1&zoom=3&sig=ACfU3U1eiDcK4JPhiiv5u9_W0Gp7qd5N0A&w=1280"
+                  class="card-buku">
+              <div class="card-body">
+                  <h5 class="card-title mb-2">Éclair : Pagi Terakhir di Rusia</h5>
+                  <p>Genre : Romance</p>
+                  <p>Penulis : Prisca Primasari</p>
+                  <p>Tahun : 2011</p>
+                  <a href="/peminjaman{{id}}" class="btn btn-primary col rounded-pill">Pinjam</a>
+                  <a onclick="$('#deskripsi').addClass('is-active')" type="button" class="btn border-primary col rounded-pill" data-bs-toggle="modal" data-bs-target="#deskripsi">Deskripsi</a>
+              </div>
+          </div>
+      </div> -->
+    </div>
+  </div>
+</section>
+<!-- Deskripsi -->
+<div class="modal" id="deskripsi">
+  <div
+    class="modal-background"
+    onclick='$("#deskripsi").removeClass("is-active")'>
+  </div>
+  <div class="modal-content modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Deskripsi</h5>
+        <button onclick='$("#deskripsi").removeClass("is-active")' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-between mt-2">
+          <div class="col-md-4">
+            <img src="https://books.google.co.id/books/content?id=FbI24xANEx0C&hl=id&pg=PP1&img=1&zoom=3&sig=ACfU3U1eiDcK4JPhiiv5u9_W0Gp7qd5N0A&w=1280"
+                class="card-img-top">
+          </div>
+          <div class="col-md-8">
+            <ul class="popup-deskripsi">
+              <h4 class="card-judul" style="font-weight: 600;">Éclair : Pagi Terakhir di Rusia</h4>
+              <hr class="horizontal-line">
+              <p class="card-genre">Genre : Romance</p>
+              <p class="card-penulis">Penulis : Prisca Primasari</p>
+              <p class="card-tahun">Tahun : 2011</p>
+              <p class="card-stok">Stok : 3</p>
+            </ul>
+          </div>
+          <h6 class="card-title mt-3 mb-1" style="font-weight: 600;">SINOPSIS</h6>
+              <p class="card-sinopsis">
+                Seandainya bisa, aku ingin terbang bersamamu dan burung-burung di atas sana. 
+                Aku ingin terus duduk bersamamu di bawah teduhnya pohon—berbagi éclair, 
+                ditemani matahari dan angin sepoi-sepoi. Aku ingin terus menggenggam jari-jemarimu, 
+                berbagi rasa dan hangat tubuh—selamanya. Sayangnya, gravitasi menghalangiku. 
+                Putaran bumi menambah setiap detik di hari-hari kita. Seperti lilin yang terus terbakar, 
+                tanpa terasa waktu kita pun tidak tersisa banyak. Semua terasa terburu-buru. 
+                Perpisahan pun terasa semakin menakutkan. Aku rebah di tanah. 
+                Memejamkan mata kuat-kuat karena air mata yang menderas. “Aku masih di sini,” bisikmu, selirih angin sore. 
+                Tapi aku tak percaya. Bagaimana jika saat aku membuka mata nanti, kau benar-benar tiada?
+              </p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button onclick='$("#deskripsi").removeClass("is-active")' type="button" class="btn btn-danger" data-bs-dismiss="modal" style="width: 100%;">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+{% include 'footer.html' %}
+<!-- <footer class="copyright mt-3 shadow">
+  <div class="container py-2">
+    <div class="row mt-2">
+      <div class="col-md-4">
+        Copyright © by Kelompok 2
+      </div> -->
+      <!-- <div class="icon col-md-4 offset-md-4 d-flex justify-content-end">
+        <ul>
+          <i data-feather="facebook"></i>
+          <i data-feather="instagram"></i> 
+          <i data-feather="globe"></i>
+        </ul>
+      </div> -->
+    </div>
+  </div>
+</footer>
+<script>
+  feather.replace();
+  </script>
+</body>
+</html>

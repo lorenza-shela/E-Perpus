@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" href="/static/misc/favicon.ico" type="image/x-icon"/>
+  <link rel="icon" href="/static/misc/favicon.ico" type="image/x-icon"/>
+  <meta property="og:title" content="E-Perpus" />
+  <meta property="og:description" content="Anda dapat menikmati koleksi buku digital yang kaya dan beragam, mencakup berbagai genre, penulis terkenal, dan topik menarik." />
+  <meta property="og:image" content="/static/misc/buku.jpg" />
+
+  <title>E-Perpus</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="{{ url_for('static', filename='user/buku.css') }}" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Style CSS -->
+  <link href="{{ url_for('static', filename='user/buku.css') }}" rel="stylesheet">
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Feather Icon -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      show_book();
+      bsCustomFileInput.init()
+    });
+
+    function show_book() {
+      $('#cards-box').empty();
+      $.ajax({
+        type: "GET",
+        url: "/show_book",
+        data: {},
+        success: function (response) {
+          console.log(response)
+          let rows_book = response["books"];
+          for (let i = 0; i < rows_book.length; i++) {
+            let judul = rows_book[i]["judul"];
+            let genre = rows_book[i]["genre"];
+            let tahun = rows_book[i]["tahun"];
+            let pengarang = rows_book[i]["pengarang"];
+            let sampul = rows_book[i]["sampul"];
+            let id = rows_book[i]["id"];
+
+            let temp_html = `
+                    <div class="col">
+                        <div class="card shadow h-100">
+                            <img src="../${sampul}" class="card-buku">
+                            <div class="card-body">
+                                <h5 class="card-title mb-2">${judul}</h5>
+                                <p class="card-text">Genre : ${genre}</p>
+                                <p>Penulis : ${pengarang}</p>
+                                <p>Tahun : ${tahun}</p>
+                                <a onclick="form_edit(${id})" class="btn btn-primary col rounded-pill">Edit</a>
+                                <a onclick="hapus(${id})" class="btn btn-danger col rounded-pill">Hapus</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            $("#cards-box").append(temp_html);
+          }
+        },
+      });
+    }
+
+    function save() {
+      let judul = $('#judul').val();
+      let genre = $('#genre').val();
+      let tahun = $('#tahun').val();
+      let pengarang = $('#pengarang').val();
+      let stok = $('#stok').val();
+      let sampul = $("#sampul")[0].files[0];
+      let sinopsis = $('#sinopsis').val();
+
+      // Memeriksa apakah semua input telah diisi
+      if (judul && genre && tahun && pengarang && stok && sampul && sinopsis) {
+        let form_data = new FormData();
+        form_data.append("judul", judul);
+        form_data.append("genre", genre);
+        form_data.append("tahun", tahun);
+        form_data.append("pengarang", pengarang);
+        form_data.append("stok", stok);
+        form_data.append("sampul", sampul);
+        form_data.append("sinopsis", sinopsis);
+        $.ajax({
+          type: "POST",
+          url: "/save_buku",
+          data: form_data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (response) {
+            console.log(response);
+            if (response["result"] === "success"){
+              Swal.fire({
+                title: "Sukses!",
+                text: "Data buku berhasil disimpan",
+                icon: "success",
+                confirmButtonText: "OK"
+              }).then(() => {
+                window.location.reload();
+              });
+            }
+          },
+        });
+      } else {
+        // Jika ada input yang belum diisi, berikan pesan kesalahan kepada pengguna
+        alert("Mohon lengkapi semua input sebelum menyimpan.");
+      }
+    }
+
+    function form_edit(id) {
+          $.ajax({
+              type: "GET",
+              url: `/deskripsi/${id}`,
+              data: {},
+              success: function (response) {
+                  let book = response['book'];
+                  // $('#input-buku .sampul').val('src', book['sampul']);
+                  $('#input-buku .judul').val(book['judul']);
+                  $('#input-buku .genre').val(book['genre']);
+                  $('#input-buku .tahun').val(book['tahun']);
+                  $('#input-buku .pengarang').val(book['pengarang']);
+                  $('#input-buku .sinopsis').val(book['sinopsis']);
+                  $('#input-buku .stok').val(book['stok']);
+                  $('#input-buku .btn-primary').attr('onclick', `edit('${book['id']}')`);
+                  // Tampilkan modal deskripsi
+                  $('#input-buku').addClass('is-active');
+              }
+          });
+        }
+
+    function hapus(id) {
+    $.ajax({
+        type: "POST",
+        url: `/delete_book/${id}`,
+        success: function(response) {
+          console.log(response);
+          if (response["result"] === "success"){
+              Swal.fire({
+                  title: "Sukses!",
+                  text: "Data buku berhasil dihapus!",
+                  icon: "success",
+                  confirmButtonText: "OK"
+              }).then(() => {
+                  window.location.reload();
+              });
+          } else {
+            Swal.fire({
+                title: "Gagal!",
+                text: "Terjadi kesalahan saat menghapus buku!",
+                icon: "error",
+                confirmButtonText: "OK"
+            }).then(() => {
+                window.location.reload();
+            });
+          }
+        },
+    });
+}
+
+    function edit(id) {
+      let judul = $('#judul').val();
+      let genre = $('#genre').val();
+      let tahun = $('#tahun').val();
+      let pengarang = $('#pengarang').val();
+      let stok = $('#stok').val();
+      let sampul = $("#sampul")[0].files[0];
+      let sinopsis = $('#sinopsis').val();
+      let form_data = new FormData();
+      form_data.append('judul', judul);
+      form_data.append('genre', genre);
+      form_data.append('tahun', tahun);
+      form_data.append('pengarang', pengarang);
+      form_data.append('stok', stok);
+      form_data.append('sampul', sampul);
+      form_data.append('sinopsis', sinopsis);
+      $.ajax({
+        type: "POST",
+        url: `/edit_buku/${id}`,
+        data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response["result"] === "success") {
+                  Swal.fire({
+                    title: "Sukses!",
+                    text: "Data buku berhasil diperbarui!",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                  }).then(() => {
+                      window.location.reload();
+                  });
+                }
+            },
+    });
+    }
+  
+  </script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  {% if user_info %}
+  {% if user_info.role == 'admin' %}
+      {% include 'navbar_check/navbar_admin.html' %}
+  {% elif user_info.role == 'member' %}
+      {% include 'navbar_check/navbar_member.html' %}
+  {% endif %}
+{% else %}
+  {% include 'navbar_check/navbar_viewer.html' %}
+{% endif %}
+
+  <!-- BUKU ADMIN  -->
+ <section>
+  <div class="wrap">
+    <h2>TAMBAHKAN BUKU</h2>
+    <hr class="mx-auto">
+    <div class="container justify-content-center">
+      <a onclick="$('#input-buku').addClass('is-active'), $('form#tambah-buku')[0].reset();" class="btn btn-primary justify-content-center mt-3"
+        style="width: 100%;">+Tambah</a>
+    </div>
+  </div>
+
+
+  <!-- Card -->
+  <div class="mycards">
+    <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+      <!-- <div class="col">
+        <div class="card shadow h-100">
+            <img src="https://books.google.co.id/books/content?id=FbI24xANEx0C&hl=id&pg=PP1&img=1&zoom=3&sig=ACfU3U1eiDcK4JPhiiv5u9_W0Gp7qd5N0A&w=1280"
+                class="card-buku">
+            <div class="card-body">
+                <h5 class="card-title mb-2">Éclair : Pagi Terakhir di Rusia</h5>
+                <p class="card-text">Genre : Romance</p>
+                <p>Penulis : Prisca Primasari</p>
+                <p>Tahun : 2011</p>
+                <a onclick="edit()" class="btn btn-primary col rounded-pill">Edit</a>
+                <a onclick="hapus()" class="btn btn-danger col rounded-pill">Hapus</a>
+            </div>
+        </div>
+    </div> -->
+    </div>
+  </div>
+ </section>
+
+  <!-- Tambah : Form Input  -->
+  <div class="modal" id="input-buku">
+    <div class="modal-background" onclick='$("#input-buku").removeClass("is-active")'>
+    </div>
+    <div class="modal-content modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Input Buku</h5>
+          <button onclick='$("#input-buku").removeClass("is-active")' type="button" class="btn-close"
+            data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="tambah-buku">
+            <div class="mb-3">
+              <input type="text" class="form-control judul" id="judul" placeholder="Judul Buku">
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control genre" id="genre" placeholder="Genre">
+            </div>
+            <div class="mb-3">
+              <input type="number" class="form-control tahun" id="tahun" placeholder="Tahun">
+            </div>
+            <div class="mb-3">
+              <input type="text" class="form-control pengarang" id="pengarang" placeholder="Pengarang">
+            </div>
+            <div class="mb-3">
+              <input type="number" class="form-control stok" id="stok" placeholder="Stok">
+            </div>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Sampul Buku</label>
+              <input class="form-control sampul mb-3" type="file" id="sampul">
+              <div class="mb-3">
+                <textarea class="form-control sinopsis" id="sinopsis" rows="3" placeholder="Sinopsis"></textarea>
+              </div>
+              <div class="modal-footer">
+                <a onclick="save()" type="button" class="btn btn-primary" data-bs-dismiss="modal" id="save-button">Simpan</a>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  {% include 'footer.html' %}
+  
+  <script>
+    feather.replace();
+  </script>
+</body>
+
+</html>
