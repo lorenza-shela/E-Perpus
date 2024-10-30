@@ -653,11 +653,12 @@ def contact():
             tanggal_kirim = current_datetime.strftime('%d/%m/%y - %H:%M')
             timestamp = current_datetime.timestamp()
             doc = {
+                "id": timestamp,
                 "nama_lengkap":nama_lengkap,
                 "no_hp" : no_hp,
                 "pesan" : pesan,
                 "tanggal_kirim" : tanggal_kirim,
-                "timestamp": timestamp,
+                "status" : 0,
             }
 
             db.contact.insert_one(doc)
@@ -677,7 +678,7 @@ def hubungi_admin():
             SECRET_KEY,
             algorithms=['HS256']
         )
-        contacts = list(db.contact.find({}, {'_id': 0}))
+        contacts = list(db.contact.find({}, {'_id': 0}).sort("tanggal_kirim", -1))
         user_info = db.user.find_one({'username': payload["id"]})
         return render_template('hubungi_admin.html', user_info=user_info, contacts=contacts)
     except jwt.ExpiredSignatureError:
@@ -693,7 +694,12 @@ def hubungi_admin():
     # except Exception as e:
     #     # return jsonify({"error": str(e)})
     #     return jsonify({"result": "success", "msg": "Pesan berhasil dikirim"})
-                        
+    
+@app.route("/proses_pesan/<float:Id>", methods=["POST"])
+def pesan(Id):
+    db.contact.update_one({'id':Id},{'$set':{'status':1}})
+    return jsonify({'msg':'Approved!'})
+  
 @app.route('/about', methods=['GET'])
 def about():
     token_receive = request.cookies.get("mytoken")
