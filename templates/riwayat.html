@@ -228,48 +228,43 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h4>Detail Peminjaman</h4>
-                                    <form>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control nama" id="nama" placeholder="Nama Lengkap"
-                                                style="border: 2px solid grey;" value="Nama Lengkap" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control alamat" id="alamat" placeholder="Alamat"
-                                                style="border: 2px solid grey;" value="Alamat" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control telp" id="telp" placeholder="No. Telepon"
-                                                style="border: 2px solid grey;" value="No. Telepon" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label ">Tanggal Pinjam</label>
-                                            <input type="date" class="form-control tgl_pinjam" id="tgl_pinjam"
-                                                placeholder="Tanggal Pinjam" style="border: 2px solid grey;"
-                                                value="Pending" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label ">Tanggal Kembali</label>
-                                            <input type="date" class="form-control tgl_kembali" id="tgl_kembali"
-                                                placeholder="Tanggal Kembali" style="border: 2px solid grey;"
-                                                value="Pending" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="catatan" class="form-label">Catatan</label>
-                                            <br>
-                                            <textarea class="form-control catatan" placeholder="Catatan" id="floatingTextarea2"
-                                                style="height: 100px; border: 2px solid grey;" value="Pending"
-                                                disabled></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="status" class="form-label">Status</label>
-                                            <input type="text" class="form-control status" id="status" readonly>
-                                        </div>
-                                        <hr class="mx-auto">
-                                        <button type="button" class="btn btn-outline-danger"
-                                            onclick="$('#deskripsi').removeClass('is-active')">CLOSE</button>
-                                    </form>
-                                </div>
+                                    <div class="card shadow h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Detail Peminjaman</h5>
+                                                <div class="field">
+                                                    <label class="label">Nama Peminjam</label>
+                                                    <input class="input nama" type="text" readonly>
+                                                </div>
+                                                <div class="field">
+                                                    <label class="label">Alamat</label>
+                                                    <input class="input alamat" type="text" readonly>
+                                                </div>
+                                                <div class="field">
+                                                    <label class="label">No Telepon</label>
+                                                    <input class="input telp" type="text" readonly>
+                                                </div>
+                                                <div class="field">
+                                                    <label class="label">Tanggal Pinjam</label>
+                                                    <input class="input tgl_pinjam" type="text" readonly>
+                                                </div>
+                                                <div class="field">
+                                                    <label class="label">Tanggal Kembali</label>
+                                                    <input class="input tgl_kembali" type="text" readonly>
+                                                </div>
+                                                <div class="field">
+                                                    <label class="label">Catatan</label>
+                                                    <textarea class="textarea catatan" readonly></textarea>
+                                                </div>
+                                                <div class="field">
+                                                    <label class="label">Status</label>
+                                                    <input class="input status" type="text" readonly>
+                                                </div>
+                                                <div class="field">
+                                                    <button class="button is-primary is-fullwidth mt-3" onclick="$('#deskripsi').removeClass('is-active')">CLOSE</button>
+                                                </div>
+                                      </div>
+                                  </div>
+                              </div>
                             </div>
                         </div>
                     </div>
