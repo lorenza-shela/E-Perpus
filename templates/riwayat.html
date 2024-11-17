@@ -115,9 +115,9 @@
                     // Update modal deskripsi dengan informasi dari response
                     $('#deskripsi .card-img-top').attr('src', '../' + book['sampul']);
                     $('#deskripsi .card-title').text(book['judul']);
-                    $('#deskripsi .card-text-genre').text(`Genre: ${book['genre']}`);
-                    $('#deskripsi .card-text-tahun').text(`Tahun: ${book['tahun']}`);
-                    $('#deskripsi .card-text-penulis').text(`Penulis: ${book['pengarang']}`);
+                    $('#deskripsi .card-text.genre').text(`Genre: ${book['genre']}`);
+                    $('#deskripsi .card-text.tahun').text(`Tahun: ${book['tahun']}`);
+                    $('#deskripsi .card-text.penulis').text(`Penulis: ${book['pengarang']}`);
                     $('#deskripsi .nama').val(`${peminjaman['nama']}`);
                     $('#deskripsi .alamat').val(`${peminjaman['alamat']}`);
                     $('#deskripsi .telp').val(`${peminjaman['no_telp']}`);
@@ -127,17 +127,17 @@
 
                     // Ganti kondisi untuk menetapkan status
                     if (peminjaman['status'] === 0) {
-                        $('#deskripsi .status').val(`Pending`);
-                        $('#deskripsi .status').addClass('btn btn-outline-warning btnriwayat shadow-sm hidden');
+                        $('#deskripsi .status').val(`Waiting`);
+                        $('#deskripsi .status').addClass('btn btn-warning btnriwayat shadow-sm hidden');
                         $('#deskripsi .status').addClass('text-dark');
                         // $('#deskripsi .status').css('color', 'black');
                     } else if (peminjaman['status'] === 1) {
                         $('#deskripsi .status').val(`Approved`);
-                        $('#deskripsi .status').addClass('btn btn-outline-success btnriwayat shadow-sm hidden');
+                        $('#deskripsi .status').addClass('btn btn-success btnriwayat shadow-sm hidden');
                         $('#deskripsi .status').addClass('text-dark');
                     } else{
                         $('#deskripsi .status').val(`Rejected`);
-                        $('#deskripsi .status').addClass('btn btn-outline-danger btnriwayat shadow-sm hidden');
+                        $('#deskripsi .status').addClass('btn btn-danger btnriwayat shadow-sm hidden');
                         $('#deskripsi .status').addClass('text-dark');
                     }
 
@@ -177,12 +177,21 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ data['book']['judul'] }}</h5>
                                 <p class="card-text fw-bold">Tanggal Pinjam :   <small class="text-muted">{{ data['peminjaman']['tgl_pinjam']}}</small></p>
+                                {% if data['peminjaman']['status'] == 1 %}
+                                    <p class="card-text fw-bold">Tanggal Dikembalikan Maks. :   <small class="text-muted">{{ data['peminjaman']['tgl_kembali']}}</small></p>
+                                {% elif data['peminjaman']['status'] == 3  %} 
+                                    <p style="color: green;">Sudah Dikembalikan tanggal :   <small style="color: green;">{{ data['pengembalian']['tgl_kembali']}}</small>
+                                    {% if data['peminjaman']['status'] == 3 %}
+                                        <p style="color: red;">{{ data['status_pengembalian'] }}</p>
+                                    {% endif %}
+                                    </p>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center">
                             <div class="card-body">
                                 {% if data['peminjaman']['status'] == 0 %}
-                                    <button onclick="showInfo(`{{ data['peminjaman']['id'] }}`)" type="button" class="btn btn-outline-warning btnriwayat shadow-sm">Pending</button>
+                                    <button onclick="showInfo(`{{ data['peminjaman']['id'] }}`)" class="btn btn-outline-warning btnriwayat shadow-sm">Waiting</button>
                                 {% elif data['peminjaman']['status'] == 1 %}
                                     <button onclick="showInfo(`{{ data['peminjaman']['id'] }}`)" class="btn btn-outline-success btnriwayat shadow-sm">Approved</button>
                                 {% elif data['peminjaman']['status'] == 2 %}
@@ -204,17 +213,17 @@
                 <article class="media">
                     <div class="media-content">
                         <div class="field">
-                            <div class="row row-cols-1 row-cols-md-3 g-4" id="cards-box">
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="card shadow h-100">
                                         <img src="https://books.google.co.id/books/content?id=FbI24xANEx0C&hl=id&pg=PP1&img=1&zoom=3&sig=ACfU3U1eiDcK4JPhiiv5u9_W0Gp7qd5N0A&w=1280"
-                                            class="card-img-top" style="height: 100%;">
+                                            class="card-img-top" alt="...">
                                         <div class="card-body">
-                                            <h5 class="card-title mb-2">Éclair : Pagi Terakhir
+                                            <h5 class="card-title">Éclair : Pagi Terakhir
                                                 di Rusia</h5>
-                                            <p class="card-text">Genre : Romance</p>
-                                            <p>Penulis : Prisca Primasari</p>
-                                            <p>Tahun : 2011</p>
+                                            <p class="card-text genre">Genre : Romance</p>
+                                            <p class="card-text penulis">Penulis : Prisca Primasari</p>
+                                            <p class="card-text tahun">Tahun : 2011</p>
                                         </div>
                                     </div>
                                 </div>

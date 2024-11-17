@@ -35,10 +35,14 @@
         let name = $("#nama").val();
         let file = $("#foto_profil").prop("files")[0];
         let about = $("#deskripsi_profil").val();
+        let alamat = $("#alamat").val();
+        let telepon = $("#telepon").val();
         let form_data = new FormData();
         form_data.append("file_give", file);
         form_data.append("name_give", name);
         form_data.append("about_give", about);
+        form_data.append("telepon_give", telepon);
+        form_data.append("alamat_give", alamat);
 
         $.ajax({
             type: "POST",
@@ -161,20 +165,29 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Nama Lengkap</label>
+                        <label for="nama" class="form-label">Nama Lengkap</label>
                         <input type="text" class="form-control" id="nama" name="nama"
                             placeholder="Masukkan Nama Lengkap Anda" value="{{user_data.name}}" required>
                     </div>
                     <div class="mb-3"><img class="is-70x70" src="{{ url_for('static', filename=user_data.profile_pic_real)}}"></div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Foto Profil</label>
-                        <input type="file" class="form-control" id="foto_profil" name="foto_profil" value="panda.jpg"
-                            required>
+                        <label for="foto_profil" class="form-label">Foto Profil</label>
+                        <input type="file" class="form-control" id="foto_profil" name="foto_profil" required>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Deskripsi Profil</label>
+                        <label for="deskripsi_profil" class="form-label">Deskripsi Profil</label>
                         <textarea class="form-control" id="deskripsi_profil" name="deskripsi_profil" rows="4"
                             required>{{ user_data.profile_info }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Masukkan Alamat Anda"
+                        >{{ user_data.alamat }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="telepon" class="form-label">Nomor Telepon</label>
+                        <input type="tel" class="form-control" id="telepon" name="telepon" placeholder="Masukkan Nomor Telepon Anda" 
+                        value="{{ user_data.telepon }}">
                     </div>
                 </div>
                 <div class="modal-footer">
