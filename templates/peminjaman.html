@@ -62,7 +62,7 @@
                 let alamat = $('#alamat').val();
                 let no_telp = $('#no_telp').val();
                 let tgl_pinjam = $('#tgl_pinjam').val();
-                let tgl_kembali = $('#tgl_kembali').val();
+                // let tgl_kembali = $('#tgl_kembali').val();
                 let catatan = $('#catatan').val();
                 $.ajax({
                     type: "POST",
@@ -73,7 +73,7 @@
                         alamat_give: alamat,
                         telp_give: no_telp,
                         tgl_pinjam: tgl_pinjam,
-                        tgl_kembali: tgl_kembali,
+                        // tgl_kembali: tgl_kembali,
                         catatan: catatan,
                         book_id: id
                      },
@@ -86,6 +86,13 @@
                                 confirmButtonText: "OK"
                             }).then(() => {
                                 window.location.reload();
+                            });
+                        }else{
+                            Swal.fire({
+                                title: "Gagal!",
+                                text: response["msg"],
+                                icon: "error",
+                                confirmButtonText: "OK"
                             });
                         }
                     }
@@ -108,11 +115,10 @@
         <div class="container">
             <div class="mb-5">
                 <h3 class="text-center fw-bold judulkategori">FORMULIR PEMINJAMAN BUKU</h3>
-
                 <hr class="mx-auto">
             </div>
             <div class="mycards">
-                <div class="row row-cols-1 row-cols-md-3 g-4" id="cards-box">
+                <div class="row g-4" id="cards-box">
                     <div class="col-md-4">
                         <div class="card shadow h-100">
                             <img src="{{ url_for('static', filename='../' + find_book.sampul) }}"
@@ -127,32 +133,35 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h4>Data Diri Peminjam</h4>
+                        <h4 class="mb-3" style="font-size:1.5e; color: #333;">Data Diri Peminjam</h4>
                         <form>
                             <div class="mb-3">
                                 <input type="text" class="form-control" id="username" placeholder="Nama Lengkap"
                                     style="border: 2px solid grey;" value="{{user_info.username}}" hidden>
                                 <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap"
-                                    style="border: 2px solid grey;">
+                                    style="border: 2px solid grey;" value="{{user_info.name}}">
                             </div>
                             <div class="mb-3">
                                 <input type="text" class="form-control" id="alamat" placeholder="Alamat"
-                                    style="border: 2px solid grey;">
+                                    style="border: 2px solid grey;" value="{{user_info.alamat}}">
                             </div>
                             <div class="mb-3">
                                 <input type="text" class="form-control" id="no_telp" placeholder="No. Telepon"
-                                    style="border: 2px solid grey;">
+                                    style="border: 2px solid grey;" value="{{user_info.telepon}}">
                             </div>
                             <div class="mb-3">
                                 <label for="tgl_pinjam" class="form-label">Tanggal Pinjam</label>
                                 <input type="date" class="form-control" id="tgl_pinjam" placeholder="Tanggal Pinjam"
                                     style="border: 2px solid grey;">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="border-color: #DAA520; font-weight: 2px;">
+                                <small class="text-warning">Peminjaman Buku Maks. 7 Hari</small>
+                            </div>
+<!--                             <div class="mb-3">
                                 <label for="tgl_kembali" class="form-label">Tanggal Kembali</label>
                                 <input type="date" class="form-control" id="tgl_kembali" placeholder="Tanggal Kembali"
                                     style="border: 2px solid grey;">
-                            </div>
+                            </div> -->
                             <div class="form-floating">
                                 <textarea class="form-control" placeholder="Catatan" id="catatan"
                                     style="height: 100px; border: 2px solid grey;"></textarea>
@@ -164,6 +173,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
     {% include 'footer.html' %}
