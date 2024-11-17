@@ -157,9 +157,7 @@ def save_buku():
         'stok': stok,
         'sampul': filename,
         'sinopsis': sinopsis
-
     }
-    print(doc)
     db.book.insert_one(doc)
     return jsonify({"result": "success", 'msg': 'Data buku berhasil disimpan'})
 
@@ -276,14 +274,31 @@ def riwayat(username):
 
         book_list = list(db.book.find({},{'_id':0}))
         peminjaman_list = list(db.peminjaman.find({"username":username},{'_id':0}))
-
+        pengembalian_list = list(db.pengembalian.find({},{'_id':0}))
+        
         combined_data = []
         for peminjaman in peminjaman_list:
             book_id = peminjaman.get('id_buku')
             book_data = next((book for book in book_list if book.get('id') == book_id), None)
-
+            pengembalian_data = next((pengembalian for pengembalian in pengembalian_list if pengembalian.get('id_peminjaman') == peminjaman.get('id')), None)
+            
             if book_data:
-                combined_data.append({'peminjaman': peminjaman, 'book': book_data})
+                combined_entry = {'peminjaman': peminjaman, 'book': book_data}
+                if pengembalian_data:
+                    combined_entry['pengembalian'] = pengembalian_data
+
+                    # selisih tanggal
+                    tgl_kembali_peminjaman = datetime.strptime(peminjaman['tgl_kembali'], '%Y-%m-%d')
+                    tgl_kembali_pengembalian = datetime.strptime(pengembalian_data['tgl_kembali'], '%Y-%m-%d')
+
+                    # Menentukan apakah pengembalian tepat waktu atau terlambat
+                    if tgl_kembali_pengembalian >= tgl_kembali_peminjaman:
+                        selisih_hari = (tgl_kembali_pengembalian - tgl_kembali_peminjaman).days
+                        combined_entry['status_pengembalian'] = f"Peminjaman lebih {selisih_hari} Hari"
+
+                combined_data.append(combined_entry)
+            # if book_data:
+            #     combined_data.append({'peminjaman': peminjaman, 'book': book_data})
 
         return render_template('riwayat.html', books= book_list, peminjaman=peminjaman_list, combined_data=combined_data, user_info=user_info, status=status)
     except jwt.ExpiredSignatureError:
@@ -303,8 +318,23 @@ def daftar():
 @app.route("/accept/<int:bookId>", methods=["POST"])
 def accept_book(bookId):
     id_give = request.form['id_give']
-    db.peminjaman.update_one({'id':id_give},{'$set':{'status':1}})
-    return jsonify({'msg':'Approved!'})
+    peminjaman = db.peminjaman.find_one({'id':id_give})
+    
+    if peminjaman:
+        db.peminjaman.update_one({'id':id_give},{'$set':{'status':1}})
+        book_id = peminjaman['id_buku']
+        book = db.book.find_one({'id':book_id})
+        if book and book['stok'] > 0:
+            new_stok = book['stok'] - 1
+            db.book.update_one({'id': book_id}, {'$set': {'stok': new_stok}})
+            return jsonify({'msg':'Approved!'})
+        else:
+            return jsonify({'msg': 'Stok buku tidak cukup!'})
+    else:
+        return jsonify({'msg':'Peminjaman tidak ditemukan!'})
+
+    # db.peminjaman.update_one({'id':id_give},{'$set':{'status':1}})
+    # return jsonify({'msg':'Approved!'})
 
 @app.route("/reject/<int:bookId>", methods=["POST"])
 def reject_book(bookId):
@@ -343,27 +373,40 @@ def proses_pinjam(id):
     alamat = request.form.get('alamat_give')
     no_telp = request.form.get('telp_give')
     tgl_pinjam = request.form.get('tgl_pinjam')
-    tgl_kembali = request.form.get('tgl_kembali')
+    # tgl_kembali = request.form.get('tgl_kembali')
     book_id = request.form.get('book_id')
     catatan = request.form.get('catatan')
 
-    today = datetime.now()
-    time = today.strftime('%Y%m%d%H%M%S')
-    doc = {
-        'id':time,
-        'username': username,
-        'nama': nama,
-        'alamat': alamat,
-        'no_telp': no_telp,
-        'tgl_pinjam': tgl_pinjam,
-        'tgl_kembali':tgl_kembali,
-        'id_buku':book_id,
-        'catatan':catatan,
-        'status':0
-    }
-    db.peminjaman.insert_one(doc)
-  
-    return jsonify({"result": "success", "msg": 'Peminjaman segera di proses'})
+    # Menentukan tanggal kembali = 7 hari setelah tanggal peminjaman
+    tgl_pinjam_obj = datetime.strptime(tgl_pinjam, '%Y-%m-%d') 
+    tgl_kembali_obj = tgl_pinjam_obj + timedelta(days=7)
+    tgl_kembali = tgl_kembali_obj.strftime('%Y-%m-%d')
+    
+    # today = datetime.now()
+    # time = today.strftime('%Y%m%d%H%M%S')
+    
+    book = db.book.find_one({'id':book_id})
+    if book and book['stok'] > 0:
+
+        today = datetime.now()
+        time = today.strftime('%Y%m%d%H%M%S')
+        
+        doc = {
+          'id':time,
+          'username': username,
+          'nama': nama,
+          'alamat': alamat,
+          'no_telp': no_telp,
+          'tgl_pinjam': tgl_pinjam,
+          'tgl_kembali':tgl_kembali,
+          'id_buku':book_id,
+          'catatan':catatan,
+          'status':0
+        }
+        db.peminjaman.insert_one(doc)
+        return jsonify({"result": "success", "msg": 'Peminjaman segera di proses'})
+    else:
+        return jsonify({"result": "error", "msg": 'Stok buku tidak mencukupi'})
 
 @app.route('/peminjaman_admin', methods=['GET'])
 def peminjaman_admin():
