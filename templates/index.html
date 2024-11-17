@@ -54,21 +54,24 @@
                         let genre = rows[i]['genre'];
                         let penulis = rows[i]['pengarang'];
                         let tahun = rows[i]['tahun'];
-                        let temp_html = `<div class="col">
-                            <div class="card shadow h-100">
-                                <img src="../${image}"
-                                    class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-2">${title}</h5>
-                                    <p class="card-text" >Genre : ${genre}</p>
-                                    <p class="card-text" >Penulis : ${penulis}</p>
-                                    <p class="card-text" >Tahun : ${tahun}</p>
-                                    <a href="/peminjaman/${id}" class="btn btn-primary col peminjaman" style="border-radius: 20px;">Pinjam</a>
-                                    <a onclick="showDescription(${id})" class="btn border-primary col"
+                        let stok = rows[i]['stok'];
+                        
+                        if(stok > 0){
+                          let temp_html = `<div class="col">
+                              <div class="card shadow h-100">
+                                  <img src="../${image}"
+                                      class="card-img-top">
+                                  <div class="card-body">
+                                      <h5 class="card-title mb-2">${title}</h5>
+                                      <p class="card-text" >Genre : ${genre}</p>
+                                      <p class="card-text" >Penulis : ${penulis}</p>
+                                      <p class="card-text" >Tahun : ${tahun}</p>
+                                      <a href="/peminjaman/${id}" class="btn btn-primary col peminjaman" style="border-radius: 20px;">Pinjam</a>
+                                      <a onclick="showDescription(${id})" class="btn border-primary col"
                                         style="border-radius: 20px;">Deskripsi</a>
-                                </div>
-                            </div>
-                        </div>`;
+                                  </div>
+                              </div>
+                          </div>`;
                         $('#cards-box').append(temp_html);
                     }
                 }
