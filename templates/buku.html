@@ -85,27 +85,29 @@
             let pengarang = rows_book[i]["pengarang"];
             let sampul = rows_book[i]["sampul"];
             let id = rows_book[i]["id"];
+            let stok = rows_book[i]["stok"];
 
-            let temp_html = `
-                    <div class="col">
-                        <div class="card shadow h-100">
-                            <img src="../${sampul}" class="card-buku">
-                            <div class="card-body">
-                                <h5 class="card-title mb-2">${judul}</h5>
-                                <p class="card-text">Genre : ${genre}</p>
-                                <p>Penulis : ${pengarang}</p>
-                                <p>Tahun : ${tahun}</p>
-                                <a href="/peminjaman/${id}" class="btn btn-primary col rounded-pill mt-3">Pinjam</a>
-                                <a onclick="showDescription(${id})" type="button" class="btn border-primary col rounded-pill" data-bs-toggle="modal" data-bs-target="#deskripsi">Deskripsi</a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            $("#cards-box").append(temp_html);
-          }
-        },
-      });
-    }
+            if (stok > 0){
+              let temp_html = `
+                      <div class="col">
+                          <div class="card shadow h-100">
+                              <img src="../${sampul}" class="card-buku">
+                              <div class="card-body">
+                                  <h5 class="card-title mb-2">${judul}</h5>
+                                  <p class="card-text">Genre : ${genre}</p>
+                                  <p>Penulis : ${pengarang}</p>
+                                  <p>Tahun : ${tahun}</p>
+                                  <a href="/peminjaman/${id}" class="btn btn-primary col rounded-pill mt-3">Pinjam</a>
+                                  <a onclick="showDescription(${id})" type="button" class="btn border-primary col rounded-pill" data-bs-toggle="modal" data-bs-target="#deskripsi">Deskripsi</a>
+                              </div>
+                          </div>
+                      </div>
+                  `;
+              $("#cards-box").append(temp_html);
+            }
+          },
+        });
+      }
 
       // function search(){
       //   $('#input-name').on('input', function() {

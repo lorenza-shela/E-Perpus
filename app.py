@@ -437,6 +437,78 @@ def peminjaman_admin():
         msg = 'There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
 
+@app.route('/pengembalian_admin', methods=['GET'])
+def pengembalian_admin():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        user_info = db.user.find_one({'username': payload["id"]})
+        book_list = list(db.book.find({},{}))
+        peminjaman_list = list(db.peminjaman.find({'status':{'$in': [1, 3]}},{}))
+        pengembalian_list = list(db.pengembalian.find({},{'_id':0}))
+
+        combined_data = []
+        for peminjaman in peminjaman_list:
+            book_id = peminjaman.get('id_buku')
+            book_data = next((book for book in book_list if book.get('id') == book_id), None)
+            pengembalian_data = next((pengembalian for pengembalian in pengembalian_list if pengembalian.get('id_peminjaman') == peminjaman.get('id')), None)
+
+            if book_data:
+                combined_entry = {'peminjaman': peminjaman, 'book': book_data}
+                if pengembalian_data:
+                    combined_entry['pengembalian'] = pengembalian_data
+
+                    # selisih tanggal
+                    tgl_kembali_peminjaman = datetime.strptime(peminjaman['tgl_kembali'], '%Y-%m-%d')
+                    tgl_kembali_pengembalian = datetime.strptime(pengembalian_data['tgl_kembali'], '%Y-%m-%d')
+                    
+                    # Menentukan apakah pengembalian tepat waktu atau terlambat
+                    if tgl_kembali_pengembalian >= tgl_kembali_peminjaman:
+                        selisih_hari = (tgl_kembali_pengembalian - tgl_kembali_peminjaman).days
+                        combined_entry['status_pengembalian'] = f"Pengembalian lebih {selisih_hari} hari"
+
+                combined_data.append(combined_entry)
+
+        return render_template('pengembalian_admin.html', books= book_list, peminjaman=peminjaman_list, combined_data=combined_data, user_info=user_info)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = 'There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
+    
+@app.route("/return/<int:bookId>", methods=["POST"])
+def return_book(bookId):
+    id_give = request.form['id_give']
+    return_Date = request.form['return_date']
+
+    peminjaman = db.peminjaman.find_one({'id':id_give})
+    if peminjaman:
+        db.peminjaman.update_one({'id':id_give},{'$set':{'status':3}})
+        book_id = peminjaman['id_buku']
+        book = db.book.find_one({'id':book_id})
+        if book:
+            new_stok = book['stok'] + 1
+            db.book.update_one({'id': book_id}, {'$set': {'stok': new_stok}})
+
+            today = datetime.now()
+            time = today.strftime('%Y%m%d%H%M%S')
+            doc = {
+                'id': time,
+                'id_peminjaman': id_give,
+                'tgl_kembali': return_Date
+            }
+            db.pengembalian.insert_one(doc)
+            return jsonify({'msg': 'Pengembalian Berhasil'})
+        else:
+            return jsonify({'msg':'Buku tidak ditemukan!'})
+    else:
+        return jsonify({'msg':'Peminjaman tidak ditemukan!'}) 
+      
 # @app.route("/update_profile", methods=["POST"])
 # def save_img():
 #     token_receive = request.cookies.get(TOKEN_KEY)
@@ -599,9 +671,14 @@ def up_profil():
         username = payload["id"]
         name_receive = request.form["name_give"]
         about_receive = request.form["about_give"]
+        alamat_receive = request.form["alamat_give"]
+        telepon_receive = request.form["telepon_give"]
+        
         new_doc = {
             "name": name_receive, 
-            "profile_info": about_receive}
+            "profile_info": about_receive,
+            "alamat": alamat_receive,
+            "telepon": telepon_receive}
         
         if "file_give" in request.files:
             file = request.files["file_give"]
@@ -703,10 +780,8 @@ def contact():
                 "tanggal_kirim" : tanggal_kirim,
                 "status" : 0,
             }
-
             db.contact.insert_one(doc)
             return jsonify({"result": "success", "msg": "Pesan berhasil dikirim"})
-
         else:
             return render_template("contact.html",user_info=user_info)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
@@ -741,7 +816,7 @@ def hubungi_admin():
 @app.route("/proses_pesan/<float:Id>", methods=["POST"])
 def pesan(Id):
     db.contact.update_one({'id':Id},{'$set':{'status':1}})
-    return jsonify({'msg':'Approved!'})
+    return jsonify({'msg':'Responed!'})
   
 @app.route('/about', methods=['GET'])
 def about():
