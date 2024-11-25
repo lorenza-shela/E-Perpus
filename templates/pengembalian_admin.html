@@ -93,6 +93,17 @@
                 }
             });
         }
+        // Menetapkan tanggal minimal saat halaman dimuat    
+            document.addEventListener("DOMContentLoaded", function () {
+            let today = new Date();
+            let day = String(today.getDate()).padStart(2, '0');
+            let month = String(today.getMonth() + 1).padStart(2, '0'); // Bulan dimulai dari 0
+            let year = today.getFullYear();
+            let minDate = year + '-' + month + '-' + day;
+
+            // Menetapkan tanggal minimum pada input tanggal pinjam
+            document.getElementById("tgl_kembali").setAttribute("min", minDate);
+            });
 
     </script>
 </head>
