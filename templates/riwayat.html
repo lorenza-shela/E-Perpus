@@ -116,8 +116,8 @@
                     $('#deskripsi .card-img-top').attr('src', '../' + book['sampul']);
                     $('#deskripsi .card-title').text(book['judul']);
                     $('#deskripsi .card-text.genre').text(`Genre: ${book['genre']}`);
-                    $('#deskripsi .card-text.tahun').text(`Tahun: ${book['tahun']}`);
-                    $('#deskripsi .card-text.penulis').text(`Penulis: ${book['pengarang']}`);
+                    $('#deskripsi .card-text.tahun').text(`Year: ${book['tahun']}`);
+                    $('#deskripsi .card-text.penulis').text(`Author: ${book['pengarang']}`);
                     $('#deskripsi .nama').val(`${peminjaman['nama']}`);
                     $('#deskripsi .alamat').val(`${peminjaman['alamat']}`);
                     $('#deskripsi .telp').val(`${peminjaman['no_telp']}`);
@@ -164,7 +164,7 @@
     <section class="artikel_area section_gap py-5" id="artikelsection" style="min-height:100vh">
         <div class="container">
             <div class="mb-5">
-                <h3 class="text-center fw-bold judulkategori">Riwayat Peminjaman</h3>
+                <h3 class="text-center fw-bold judulkategori">Borrow History</h3>
 
                 <hr class="mx-auto">
             </div>
@@ -176,9 +176,9 @@
                         <div class="col-8 col-md-9 col-lg-10">
                             <div class="card-body">
                                 <h5 class="card-title">{{ data['book']['judul'] }}</h5>
-                                <p class="card-text fw-bold">Tanggal Pinjam :   <small class="text-muted">{{ data['peminjaman']['tgl_pinjam']}}</small></p>
+                                <p class="card-text fw-bold">Borrowing Date :   <small class="text-muted">{{ data['peminjaman']['tgl_pinjam']}}</small></p>
                                 {% if data['peminjaman']['status'] == 1 %}
-                                    <p class="card-text fw-bold">Tanggal Dikembalikan Maks. :   <small class="text-muted">{{ data['peminjaman']['tgl_kembali']}}</small></p>
+                                    <p class="card-text fw-bold">Max return date :   <small class="text-muted">{{ data['peminjaman']['tgl_kembali']}}</small></p>
                                 {% elif data['peminjaman']['status'] == 3  %} 
                                     <p style="color: green;">Sudah Dikembalikan tanggal :   <small style="color: green;">{{ data['pengembalian']['tgl_kembali']}}</small>
                                     {% if data['peminjaman']['status'] == 3 %}
