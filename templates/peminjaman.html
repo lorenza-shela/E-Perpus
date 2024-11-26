@@ -80,8 +80,8 @@
                     success: function (response) {
                         if (response["result"] === "success"){
                             Swal.fire({
-                                title: "Sukses!",
-                                text: "Peminjaman Anda akan diproses. Tunggu validasi admin.",
+                                title: "Success!",
+                                text: "Your borrowing will be processed. Wait for admin validation.",
                                 icon: "success",
                                 confirmButtonText: "OK"
                             }).then(() => {
@@ -125,7 +125,7 @@
     <section class="artikel_area section_gap py-5" id="artikelsection" style="min-height:100vh">
         <div class="container">
             <div class="mb-5">
-                <h3 class="text-center fw-bold judulkategori">FORMULIR PEMINJAMAN BUKU</h3>
+                <h3 class="text-center fw-bold judulkategori">BOOK BORROWING FORM</h3>
                 <hr class="mx-auto">
             </div>
             <div class="mycards">
@@ -137,36 +137,36 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-2">{{find_book.judul}}</h5>
                                 <p class="card-text">Genre : {{find_book.genre}}</p>
-                                <p>Penulis : {{find_book.pengarang}}</p>
-                                <p>Tahun : {{find_book.tahun}}</p>
-                                <p>Sinopsis : {{find_book.sinopsis}}</p>
+                                <p>Author : {{find_book.pengarang}}</p>
+                                <p>Year : {{find_book.tahun}}</p>
+                                <p>Synopsis : {{find_book.sinopsis}}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h4 class="mb-3" style="font-size:1.5e; color: #333;">Data Diri Peminjam</h4>
+                        <h4 class="mb-3" style="font-size:1.5e; color: #333;">Borrowing Information</h4>
                         <form>
                             <div class="mb-3">
                                 <input type="text" class="form-control" id="username" placeholder="Nama Lengkap"
                                     style="border: 2px solid grey;" value="{{user_info.username}}" hidden>
-                                <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap"
+                                <input type="text" class="form-control" id="nama" placeholder="Full Name"
                                     style="border: 2px solid grey;" value="{{user_info.name}}">
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="alamat" placeholder="Alamat"
+                                <input type="text" class="form-control" id="alamat" placeholder="Address"
                                     style="border: 2px solid grey;" value="{{user_info.alamat}}">
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="no_telp" placeholder="No. Telepon"
+                                <input type="text" class="form-control" id="no_telp" placeholder="Phone Number"
                                     style="border: 2px solid grey;" value="{{user_info.telepon}}">
                             </div>
                             <div class="mb-3">
-                                <label for="tgl_pinjam" class="form-label">Tanggal Pinjam</label>
-                                <input type="date" class="form-control" id="tgl_pinjam" placeholder="Tanggal Pinjam"
+                                <label for="tgl_pinjam" class="form-label">Borrowing Date</label>
+                                <input type="date" class="form-control" id="tgl_pinjam" placeholder="Borrowing Date"
                                     style="border: 2px solid grey;">
                             </div>
                             <div class="mb-3" style="border-color: #DAA520; font-weight: 2px;">
-                                <small class="text-warning">Peminjaman Buku Maks. 7 Hari</small>
+                                <small class="text-warning">Book Borrowing Max. 7 Days</small>
                             </div>
 <!--                             <div class="mb-3">
                                 <label for="tgl_kembali" class="form-label">Tanggal Kembali</label>
@@ -174,12 +174,12 @@
                                     style="border: 2px solid grey;">
                             </div> -->
                             <div class="form-floating">
-                                <textarea class="form-control" placeholder="Catatan" id="catatan"
+                                <textarea class="form-control" placeholder="Notes" id="catatan"
                                     style="height: 100px; border: 2px solid grey;"></textarea>
-                                <label for="catatan">Catatan</label>
+                                <label for="catatan">Notes</label>
                             </div>
                             <hr class="mx-auto">
-                            <button type="button" onclick="pinjam('{{find_book.id}}')" class="btn btn-primary">Proses</button>
+                            <button type="button" onclick="pinjam('{{find_book.id}}')" class="btn btn-primary">Process</button>
                         </form>
                     </div>
                 </div>
