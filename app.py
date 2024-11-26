@@ -294,7 +294,7 @@ def riwayat(username):
                     # Menentukan apakah pengembalian tepat waktu atau terlambat
                     if tgl_kembali_pengembalian >= tgl_kembali_peminjaman:
                         selisih_hari = (tgl_kembali_pengembalian - tgl_kembali_peminjaman).days
-                        combined_entry['status_pengembalian'] = f"Peminjaman lebih {selisih_hari} Hari"
+                        combined_entry['status_pengembalian'] = f"Returns over {selisih_hari} days"
 
                 combined_data.append(combined_entry)
             # if book_data:
@@ -469,7 +469,7 @@ def pengembalian_admin():
                     # Menentukan apakah pengembalian tepat waktu atau terlambat
                     if tgl_kembali_pengembalian >= tgl_kembali_peminjaman:
                         selisih_hari = (tgl_kembali_pengembalian - tgl_kembali_peminjaman).days
-                        combined_entry['status_pengembalian'] = f"Pengembalian lebih {selisih_hari} hari"
+                        combined_entry['status_pengembalian'] = f"Returns over {selisih_hari} days"
 
                 combined_data.append(combined_entry)
 
