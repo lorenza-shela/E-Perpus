@@ -64,11 +64,11 @@
                                   <div class="card-body">
                                       <h5 class="card-title mb-2">${title}</h5>
                                       <p class="card-text" >Genre : ${genre}</p>
-                                      <p class="card-text" >Penulis : ${penulis}</p>
-                                      <p class="card-text" >Tahun : ${tahun}</p>
-                                      <a href="/peminjaman/${id}" class="btn btn-primary col peminjaman" style="border-radius: 20px;">Pinjam</a>
+                                      <p class="card-text" >Author : ${penulis}</p>
+                                      <p class="card-text" >Year : ${tahun}</p>
+                                      <a href="/peminjaman/${id}" class="btn btn-primary col peminjaman" style="border-radius: 20px;">Borrow</a>
                                       <a onclick="showDescription(${id})" class="btn border-primary col"
-                                        style="border-radius: 20px;">Deskripsi</a>
+                                        style="border-radius: 20px;">Description</a>
                                   </div>
                               </div>
                           </div>`;
@@ -89,8 +89,8 @@
                   $('#deskripsi .card-img-top').attr('src', book['sampul']);
                   $('#deskripsi .card-title').text(book['judul']);
                   $('#deskripsi .card-genre').text(`Genre: ${book['genre']}`);
-                  $('#deskripsi .card-tahun').text(`Tahun: ${book['tahun']}`);
-                  $('#deskripsi .card-penulis').text(`Penulis: ${book['pengarang']}`);
+                  $('#deskripsi .card-tahun').text(`Year: ${book['tahun']}`);
+                  $('#deskripsi .card-penulis').text(`Author: ${book['pengarang']}`);
                   $('#deskripsi .card-sinopsis').text(book['sinopsis']);
                   $('#deskripsi .card-stok').text(`Stock: ${book['stok']}`);
 
@@ -124,11 +124,7 @@
                 Fast &amp; Easy Way To Borrow Books
             </h1>
             <div class="col">
-                <p class="lead mb-4 text-white ">Temukan dunia pengetahuan di ujung jari Anda. Jelajahi koleksi buku
-                    kami,
-                    pinjam, dan rasakan keajaiban membaca tanpa batas. Sambutlah pengetahuan di perpustakaan
-                    online kami – di
-                    mana petualangan literasi dimulai.
+                <p class="lead mb-4 text-white ">Discover the world of knowledge at your fingertips. Explore our book collection, borrow, and experience the magic of limitless reading. Welcome knowledge at our online library – where the adventure of literacy begins.
                 </p>
                 <div class="mt-5">
                     <a href="#mycards" style="border-radius: 20px;"
@@ -141,7 +137,7 @@
     <section class="artikel_area section_gap py-5" id="mycards" style="min-height:100vh">
         <div class="container">
             <div class="mb-5">
-                <h2 class="text-center fw-bold" style="font-size: 30px;">PEMINJAMAN BUKU PERPUSTAKAAN</h2>
+                <h2 class="text-center fw-bold" style="font-size: 30px;">BORROWING LIBRARY BOOK</h2>
                 <br>
                 <h2 class="text-center fw-bold" style="font-size: 15px; color: #007bff;">SHOW BOOKS</h2>
                 <hr>
