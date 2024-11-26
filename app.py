@@ -329,7 +329,7 @@ def accept_book(bookId):
             db.book.update_one({'id': book_id}, {'$set': {'stok': new_stok}})
             return jsonify({'msg':'Approved!'})
         else:
-            return jsonify({'msg': 'Stok buku tidak cukup!'})
+            return jsonify({'msg': 'Not enough books in stock!'})
     else:
         return jsonify({'msg':'Peminjaman tidak ditemukan!'})
 
@@ -404,9 +404,9 @@ def proses_pinjam(id):
           'status':0
         }
         db.peminjaman.insert_one(doc)
-        return jsonify({"result": "success", "msg": 'Peminjaman segera di proses'})
+        return jsonify({"result": "success", "msg": 'Borrowing is processed'})
     else:
-        return jsonify({"result": "error", "msg": 'Stok buku tidak mencukupi'})
+        return jsonify({"result": "error", "msg": 'Not enough books in stock'})
 
 @app.route('/peminjaman_admin', methods=['GET'])
 def peminjaman_admin():
@@ -503,11 +503,11 @@ def return_book(bookId):
                 'tgl_kembali': return_Date
             }
             db.pengembalian.insert_one(doc)
-            return jsonify({'msg': 'Pengembalian Berhasil'})
+            return jsonify({'msg': 'Successful Return'})
         else:
-            return jsonify({'msg':'Buku tidak ditemukan!'})
+            return jsonify({'msg':'Books are not found!'})
     else:
-        return jsonify({'msg':'Peminjaman tidak ditemukan!'}) 
+        return jsonify({'msg':'Borrowing not found!'}) 
       
 # @app.route("/update_profile", methods=["POST"])
 # def save_img():
@@ -692,7 +692,7 @@ def up_profil():
         db.user.update_one(
             {"username": payload["id"]}, 
             {"$set": new_doc})
-        return jsonify({"result": "success", "msg": "Profil Diperbarui!"})
+        return jsonify({"result": "success", "msg": "Profile Updated!"})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -781,7 +781,7 @@ def contact():
                 "status" : 0,
             }
             db.contact.insert_one(doc)
-            return jsonify({"result": "success", "msg": "Pesan berhasil dikirim"})
+            return jsonify({"result": "success", "msg": "Message sent successfully!"})
         else:
             return render_template("contact.html",user_info=user_info)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):

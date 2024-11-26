@@ -180,7 +180,7 @@
                                 {% if data['peminjaman']['status'] == 1 %}
                                     <p class="card-text fw-bold">Max return date :   <small class="text-muted">{{ data['peminjaman']['tgl_kembali']}}</small></p>
                                 {% elif data['peminjaman']['status'] == 3  %} 
-                                    <p style="color: green;">Sudah Dikembalikan tanggal :   <small style="color: green;">{{ data['pengembalian']['tgl_kembali']}}</small>
+                                    <p style="color: green;">has been returned on   <small style="color: green;">{{ data['pengembalian']['tgl_kembali']}}</small>
                                     {% if data['peminjaman']['status'] == 3 %}
                                         <p style="color: red;">{{ data['status_pengembalian'] }}</p>
                                     {% endif %}
@@ -230,29 +230,29 @@
                                 <div class="col-md-8">
                                     <div class="card shadow h-100">
                                         <div class="card-body">
-                                            <h5 class="card-title">Detail Peminjaman</h5>
+                                            <h5 class="card-title">Borrowing Details</h5>
                                                 <div class="field">
-                                                    <label class="label">Nama Peminjam</label>
+                                                    <label class="label">Borrowing Name</label>
                                                     <input class="input nama" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">Alamat</label>
+                                                    <label class="label">Address</label>
                                                     <input class="input alamat" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">No Telepon</label>
+                                                    <label class="label">Phone Number</label>
                                                     <input class="input telp" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">Tanggal Pinjam</label>
+                                                    <label class="label">Borrow Date</label>
                                                     <input class="input tgl_pinjam" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">Tanggal Kembali</label>
+                                                    <label class="label">Return Date</label>
                                                     <input class="input tgl_kembali" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">Catatan</label>
+                                                    <label class="label">Notes</label>
                                                     <textarea class="textarea catatan" readonly></textarea>
                                                 </div>
                                                 <div class="field">
