@@ -95,10 +95,10 @@
                               <div class="card-body">
                                   <h5 class="card-title mb-2">${judul}</h5>
                                   <p class="card-text">Genre : ${genre}</p>
-                                  <p>Penulis : ${pengarang}</p>
-                                  <p>Tahun : ${tahun}</p>
-                                  <a href="/peminjaman/${id}" class="btn btn-primary col rounded-pill mt-3">Pinjam</a>
-                                  <a onclick="showDescription(${id})" type="button" class="btn border-primary col rounded-pill" data-bs-toggle="modal" data-bs-target="#deskripsi">Deskripsi</a>
+                                  <p>Author : ${pengarang}</p>
+                                  <p>Year : ${tahun}</p>
+                                  <a href="/peminjaman/${id}" class="btn btn-primary col rounded-pill mt-3">Borrow</a>
+                                  <a onclick="showDescription(${id})" type="button" class="btn border-primary col rounded-pill" data-bs-toggle="modal" data-bs-target="#deskripsi">Description</a>
                               </div>
                           </div>
                       </div>
@@ -134,8 +134,8 @@
                   $('#deskripsi .card-img-top').attr('src', book['sampul']);
                   $('#deskripsi .card-judul').text(book['judul']);
                   $('#deskripsi .card-genre').text(`Genre: ${book['genre']}`);
-                  $('#deskripsi .card-tahun').text(`Tahun: ${book['tahun']}`);
-                  $('#deskripsi .card-penulis').text(`Penulis: ${book['pengarang']}`);
+                  $('#deskripsi .card-tahun').text(`Year: ${book['tahun']}`);
+                  $('#deskripsi .card-penulis').text(`Author: ${book['pengarang']}`);
                   $('#deskripsi .card-sinopsis').text(book['sinopsis']);
                   $('#deskripsi .card-stok').text(`Stock: ${book['stok']}`);
 
@@ -167,7 +167,7 @@
 <!-- BUKU PAGE -->
 <section class="artikel_area section_gap py-5" id="mycards" style="min-height:100vh">
 <div class="wrap">
-  <h2>PEMINJAMAN BUKU</h2>
+  <h2>Book Borrowing</h2>
   <hr class="mx-auto">
   <div class="search-box d-flex justify-content-center">
     <input id="input-name" class="form-control rounded-pill" style="margin-right: 0.5rem" placeholder="Cari buku...">
@@ -198,13 +198,13 @@
 <!-- Deskripsi -->
 <div class="modal" id="deskripsi">
   <div
-    class="modal-background"
-    onclick='$("#deskripsi").removeClass("is-active")'>
+    class="modal-background" 
+       onclick='$("#deskripsi").removeClass("is-active")'>
   </div>
   <div class="modal-content modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Deskripsi</h5>
+        <h5 class="modal-title">Description</h5>
         <button onclick='$("#deskripsi").removeClass("is-active")' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
