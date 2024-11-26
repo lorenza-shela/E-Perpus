@@ -428,8 +428,18 @@ def peminjaman_admin():
 
             if book_data:
                 combined_data.append({'peminjaman': peminjaman, 'book': book_data})
+                
+        # Sorting logic
+        def sort_key(item):
+            status_order = {0: 0, 1: 1, 2: 2, 3: 3}
+            status = item['peminjaman']['status']
+            date = item['peminjaman']['tgl_pinjam']
+            return (status_order[status], date)
 
-        return render_template('peminjaman_admin.html', books= book_list, peminjaman=peminjaman_list, combined_data=combined_data, user_info=user_info)
+        # combined_data.sort(key=sort_key, reverse=True)
+        sorted_data = sorted(combined_data, key=sort_key)
+        
+        return render_template('peminjaman_admin.html', books= book_list, peminjaman=peminjaman_list, combined_data=sorted_data, user_info=user_info)
     except jwt.ExpiredSignatureError:
         msg = 'Your token has expired'
         return redirect(url_for('login', msg=msg))
