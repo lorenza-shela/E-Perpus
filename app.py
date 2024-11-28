@@ -513,7 +513,7 @@ def return_book(bookId):
                 'tgl_kembali': return_Date
             }
             db.pengembalian.insert_one(doc)
-            return jsonify({'msg': 'Successful Return'})
+            return jsonify({'msg': 'Successful Return!'})
         else:
             return jsonify({'msg':'Books are not found!'})
     else:
