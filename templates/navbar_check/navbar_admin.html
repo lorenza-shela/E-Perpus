@@ -5,7 +5,7 @@
         window.location.href = "/login";
     }
   
-      function updateBorrowingNotification() {
+    function updateBorrowingNotification() {
         fetch('/unconfirmed_borrowings_count')
             .then(response => response.json())
             .then(data => {
@@ -18,6 +18,10 @@
             })
             .catch(error => console.error('Error fetching unconfirmed borrowings count:', error));
     }
+      document.addEventListener('DOMContentLoaded', () => {
+        updateBorrowingNotification();
+        setInterval(updateBorrowingNotification, 60000); // Update every minute
+    });
 </script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-light navbar shadow-sm sticky-top">
     <div class="container">
