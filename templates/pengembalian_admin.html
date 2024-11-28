@@ -133,7 +133,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ data['peminjaman']['nama'] }}</h5>
                                 <p class="card-text fw-bold">{{ data['book']['judul'] }}</p>
-                                <p class="card-text fw-bold"> Borrowes Date : <small
+                                <p class="card-text fw-bold"> Borrowed Date : <small
                                         class="text-muted">{{ data['peminjaman']['tgl_pinjam'] }}</small>
                                     {% if data['peminjaman']['status'] == 3 %}
                                         <p style="color: red;">{{ data['status_pengembalian'] }}</p>
