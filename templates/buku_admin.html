@@ -71,10 +71,10 @@
                             <div class="card-body">
                                 <h5 class="card-title mb-2">${judul}</h5>
                                 <p class="card-text">Genre : ${genre}</p>
-                                <p>Penulis : ${pengarang}</p>
-                                <p>Tahun : ${tahun}</p>
+                                <p>Author : ${pengarang}</p>
+                                <p>Year : ${tahun}</p>
                                 <a onclick="form_edit(${id})" class="btn btn-primary col rounded-pill">Edit</a>
-                                <a onclick="hapus(${id})" class="btn btn-danger col rounded-pill">Hapus</a>
+                                <a onclick="hapus(${id})" class="btn btn-danger col rounded-pill">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -115,8 +115,8 @@
             console.log(response);
             if (response["result"] === "success"){
               Swal.fire({
-                title: "Sukses!",
-                text: "Data buku berhasil disimpan",
+                title: "Success!",
+                text: "Book data saved successfully",
                 icon: "success",
                 confirmButtonText: "OK"
               }).then(() => {
@@ -127,7 +127,7 @@
         });
       } else {
         // Jika ada input yang belum diisi, berikan pesan kesalahan kepada pengguna
-        alert("Mohon lengkapi semua input sebelum menyimpan.");
+        alert("Please complete all inputs before saving.");
       }
     }
 
@@ -160,8 +160,8 @@
           console.log(response);
           if (response["result"] === "success"){
               Swal.fire({
-                  title: "Sukses!",
-                  text: "Data buku berhasil dihapus!",
+                  title: "Success!",
+                  text: "Book data successfully deleted!",
                   icon: "success",
                   confirmButtonText: "OK"
               }).then(() => {
@@ -169,8 +169,8 @@
               });
           } else {
             Swal.fire({
-                title: "Gagal!",
-                text: "Terjadi kesalahan saat menghapus buku!",
+                title: "Failed!",
+                text: "An error occurred while deleting a book!",
                 icon: "error",
                 confirmButtonText: "OK"
             }).then(() => {
@@ -207,8 +207,8 @@
             success: function (response) {
                 if (response["result"] === "success") {
                   Swal.fire({
-                    title: "Sukses!",
-                    text: "Data buku berhasil diperbarui!",
+                    title: "Success!",
+                    text: "Book data updated successfully!",
                     icon: "success",
                     confirmButtonText: "OK"
                   }).then(() => {
@@ -237,11 +237,11 @@
   <!-- BUKU ADMIN  -->
  <section>
   <div class="wrap">
-    <h2>TAMBAHKAN BUKU</h2>
+    <h2>ADD BOOKS</h2>
     <hr class="mx-auto">
     <div class="container justify-content-center">
       <a onclick="$('#input-buku').addClass('is-active'), $('form#tambah-buku')[0].reset();" class="btn btn-primary justify-content-center mt-3"
-        style="width: 100%;">+Tambah</a>
+        style="width: 100%;">+Add</a>
     </div>
   </div>
 
@@ -274,35 +274,35 @@
     <div class="modal-content modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Input Buku</h5>
+          <h5 class="modal-title">Enter Books</h5>
           <button onclick='$("#input-buku").removeClass("is-active")' type="button" class="btn-close"
             data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <form id="tambah-buku">
             <div class="mb-3">
-              <input type="text" class="form-control judul" id="judul" placeholder="Judul Buku">
+              <input type="text" class="form-control judul" id="judul" placeholder="Book Title">
             </div>
             <div class="mb-3">
               <input type="text" class="form-control genre" id="genre" placeholder="Genre">
             </div>
             <div class="mb-3">
-              <input type="number" class="form-control tahun" id="tahun" placeholder="Tahun">
+              <input type="number" class="form-control tahun" id="tahun" placeholder="Year">
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control pengarang" id="pengarang" placeholder="Pengarang">
+              <input type="text" class="form-control pengarang" id="pengarang" placeholder="Author">
             </div>
             <div class="mb-3">
-              <input type="number" class="form-control stok" id="stok" placeholder="Stok">
+              <input type="number" class="form-control stok" id="stok" placeholder="Stock">
             </div>
             <div class="mb-3">
-              <label for="formFile" class="form-label">Sampul Buku</label>
+              <label for="formFile" class="form-label">Book Cover</label>
               <input class="form-control sampul mb-3" type="file" id="sampul">
               <div class="mb-3">
-                <textarea class="form-control sinopsis" id="sinopsis" rows="3" placeholder="Sinopsis"></textarea>
+                <textarea class="form-control sinopsis" id="sinopsis" rows="3" placeholder="Synopsis"></textarea>
               </div>
               <div class="modal-footer">
-                <a onclick="save()" type="button" class="btn btn-primary" data-bs-dismiss="modal" id="save-button">Simpan</a>
+                <a onclick="save()" type="button" class="btn btn-primary" data-bs-dismiss="modal" id="save-button">Save</a>
               </div>
           </form>
         </div>
