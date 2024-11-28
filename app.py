@@ -331,7 +331,7 @@ def accept_book(bookId):
         else:
             return jsonify({'msg': 'Not enough books in stock!'})
     else:
-        return jsonify({'msg':'Peminjaman tidak ditemukan!'})
+        return jsonify({'msg':'Borrowing not found!'})
 
     # db.peminjaman.update_one({'id':id_give},{'$set':{'status':1}})
     # return jsonify({'msg':'Approved!'})
