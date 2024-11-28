@@ -4,6 +4,20 @@
         alert('Signed out!');
         window.location.href = "/login";
     }
+  
+      function updateBorrowingNotification() {
+        fetch('/unconfirmed_borrowings_count')
+            .then(response => response.json())
+            .then(data => {
+                const borrowingTab = document.querySelector('#borrowing-tab');
+                if (data.count > 0) {
+                    borrowingTab.innerHTML = `Borrowing <span class="badge rounded-pill bg-danger">${data.count}</span>`;
+                } else {
+                    borrowingTab.innerHTML = 'Borrowing';
+                }
+            })
+            .catch(error => console.error('Error fetching unconfirmed borrowings count:', error));
+    }
 </script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-light navbar shadow-sm sticky-top">
     <div class="container">
@@ -20,7 +34,7 @@
                     <a class="nav-link text-dark" href="/buku_admin">Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="/peminjaman_admin">Borrowing</a>
+                    <a id="borrowing-tab" class="nav-link text-dark" href="/peminjaman_admin">Borrowing</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="/pengembalian_admin">Returning</a>

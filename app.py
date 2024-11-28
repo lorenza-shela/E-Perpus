@@ -806,7 +806,7 @@ def hubungi_admin():
             SECRET_KEY,
             algorithms=['HS256']
         )
-        contacts = list(db.contact.find({}, {'_id': 0}).sort("tanggal_kirim", -1))
+        contacts = list(db.contact.find({}, {'_id': 0}).sort("status"))
         user_info = db.user.find_one({'username': payload["id"]})
         return render_template('hubungi_admin.html', user_info=user_info, contacts=contacts)
     except jwt.ExpiredSignatureError:
@@ -846,6 +846,13 @@ def about():
         msg = 'There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
 
+@app.route('/unconfirmed_borrowings_count', methods=['GET'])
+def unconfirmed_borrowings_count():
+    try:
+        count = db.peminjaman.count_documents({'status': 0})  # Misalnya status 0 adalah status belum dikonfirmasi
+        return jsonify({'count': count})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
