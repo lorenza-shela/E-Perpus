@@ -292,7 +292,7 @@ def riwayat(username):
                     tgl_kembali_pengembalian = datetime.strptime(pengembalian_data['tgl_kembali'], '%Y-%m-%d')
 
                     # Menentukan apakah pengembalian tepat waktu atau terlambat
-                    if tgl_kembali_pengembalian >= tgl_kembali_peminjaman:
+                    if tgl_kembali_pengembalian > tgl_kembali_peminjaman:
                         selisih_hari = (tgl_kembali_pengembalian - tgl_kembali_peminjaman).days
                         combined_entry['status_pengembalian'] = f"Returns over {selisih_hari} days"
 
