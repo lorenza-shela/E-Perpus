@@ -300,7 +300,8 @@ def riwayat(username):
                     # Menentukan apakah pengembalian tepat waktu atau terlambat
                     if tgl_kembali_pengembalian > tgl_kembali_peminjaman:
                         selisih_hari = (tgl_kembali_pengembalian - tgl_kembali_peminjaman).days
-                        combined_entry['status_pengembalian'] = f"Returns over {selisih_hari} days"
+                        denda = selisih_hari * 500
+                        combined_entry['status_pengembalian'] = f"Returns over {selisih_hari} days, Fine : {selisih_hari} x 500 = Rp {denda}"
 
                 combined_data.append(combined_entry)
             # if book_data:
