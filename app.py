@@ -622,7 +622,10 @@ def user_signup():
         "password": pw_hash,                                      
         "profile_pic_real": "profile_pics/profile_placeholder.png", 
         "profile_info": "",
-        "role": "member"                                          
+        "role": "member",
+        "alamat": "",
+        "telepon": "",
+        "ktp_pic_real": ""
         }
         db.user.insert_one(doc)
         return jsonify({"result": "success"})
