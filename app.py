@@ -106,6 +106,12 @@ def peminjaman(id):
         )
         user_info = db.user.find_one({'username': payload["id"]})
         find_book = db.book.find_one({'id': id}, {'_id':0})
+        
+        # Pengecekan KTP
+        if not user_info.get('ktp_pic_real') or not user_info.get('profile_info'):
+            msg = "Please complete your personal data."
+            return redirect(url_for('profil', username=payload['id'], msg=msg))
+          
         return render_template('peminjaman.html', find_book=find_book, user_info=user_info)
     except jwt.ExpiredSignatureError:
         msg = 'Your token has expired'
@@ -479,7 +485,8 @@ def pengembalian_admin():
                     # Menentukan apakah pengembalian tepat waktu atau terlambat
                     if tgl_kembali_pengembalian >= tgl_kembali_peminjaman:
                         selisih_hari = (tgl_kembali_pengembalian - tgl_kembali_peminjaman).days
-                        combined_entry['status_pengembalian'] = f"Returns over {selisih_hari} days"
+                        denda = selisih_hari * 500
+                        combined_entry['status_pengembalian'] = f"Returns over {selisih_hari} days, Fine : {selisih_hari} x 500 = Rp {denda}"
 
                 combined_data.append(combined_entry)
 
