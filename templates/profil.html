@@ -34,11 +34,13 @@
     function update_profile() {
         let name = $("#nama").val();
         let file = $("#foto_profil").prop("files")[0];
+        let ktp = $("#foto_ktp").prop("files")[0];
         let about = $("#deskripsi_profil").val();
         let alamat = $("#alamat").val();
         let telepon = $("#telepon").val();
         let form_data = new FormData();
         form_data.append("file_give", file);
+        form_data.append("ktp_give", ktp);
         form_data.append("name_give", name);
         form_data.append("about_give", about);
         form_data.append("telepon_give", telepon);
@@ -173,6 +175,12 @@
                     <div class="mb-3">
                         <label for="foto_profil" class="form-label">Photo Profile</label>
                         <input type="file" class="form-control" id="foto_profil" name="foto_profil" required>
+                    </div>
+                    <!-- Penambahan foto ktp -->
+                    <div class="mb-3"><img class="is-70x70" src="{{ url_for('static', filename=user_data.ktp_pic_real)}}"></div>
+                    <div class="mb-3">
+                        <label for="foto_ktp" class="form-label">Photo KTP</label>
+                        <input type="file" class="form-control" id="foto_ktp" name="foto_ktp" required>
                     </div>
                     <div class="mb-3">
                         <label for="deskripsi_profil" class="form-label">Profile Description</label>

@@ -698,6 +698,16 @@ def up_profil():
             file.save("./static/" + file_path)
             new_doc["profile_pic"] = filename
             new_doc["profile_pic_real"] = file_path
+            
+        # Logika untuk menyimpan foto KTP
+        if "ktp_give" in request.files:
+            ktp_file = request.files["ktp_give"]
+            ktp_filename = secure_filename(ktp_file.filename)
+            ktp_extension = ktp_filename.split(".")[-1]
+            ktp_file_path = f"ktp_pics/{username}.{ktp_extension}"
+            ktp_file.save("./static/" + ktp_file_path)
+            new_doc["ktp_pic"] = ktp_filename
+            new_doc["ktp_pic_real"] = ktp_file_path
 
         db.user.update_one(
             {"username": payload["id"]}, 
