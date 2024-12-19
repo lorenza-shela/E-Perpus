@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     
+    <link rel="stylesheet" href="{{ url_for('static', filename='user/style.css') }}">
 
     <title>Contact Admin</title>
     
@@ -58,9 +59,8 @@
     {% include 'navbar_check/navbar_viewer.html' %}
 {% endif %}
 
-    <div class="container pt-5 pb-5" style="background-image: url(assets/buku.jpg);">
-        
-        <div class="wrap mx-auto text-center pb-5 pt-5" style="width: 800px; background: white; border-radius: 10px;">
+    <div class="container pt-5 pb-5" style="background-image: url(assets/buku.jpg); background-size: cover;">
+        <div class="wrap mx-auto text-center pb-5 pt-5" style="background: white; border-radius: 10px;">
             <h3 class="pb-2 text-center">Contact Admin</h3>
             <form action="" id="contact_us" method="POST">
                 <div class="row pb-3 pt-3">
