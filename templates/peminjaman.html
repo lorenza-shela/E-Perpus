@@ -85,7 +85,8 @@
                                 icon: "success",
                                 confirmButtonText: "OK"
                             }).then(() => {
-                                window.location.reload();
+                                // window.location.reload();
+                                window.location.href = `/riwayat/${username}`;
                             });
                         }else{
                             Swal.fire({
