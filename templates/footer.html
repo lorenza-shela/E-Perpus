@@ -5,23 +5,48 @@
     footer .icon a {
         color: #000000;
         margin-right: 15px;
+        font-size: 1.5rem;
     }
 
     footer .icon a:hover {
         color: #0066ff;
     }
+    .footer {
+        background-color: #f8f9fa;
+    }
+    .footer .text {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .footer .icon {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    @media (max-width: 767px) {
+        .footer .icon {
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .footer .text {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+  }
 </style>
 
 <footer class="footer mt-auto py-3 bg-light shadow">
   <div class="container">
     <!-- <span class="text-muted">Copyright © by Kelompok 2</span> -->
     <div class="row mt-2 justify-content-center">
-      <div class="text col-md-8" style="font-weight: 600">Copyright © by Kelompok 2</div>
-      <div class="icon col-6 col-md-4 d-flex justify-content-end">
+      <div class="text col-12 col-md-8 text-center text-md-start">Copyright © by Kelompok 2</div>
+      <div class="icon col-12 col-md-4 d-flex justify-content-center justify-content-md-end">
         <!-- <ul> -->
-        <a href="https://www.facebook.com/"><i data-feather="facebook"></i></a>
-        <a href="https://www.instagram.com/"><i data-feather="instagram"></i ></a>
-        <a href="https://www.google.co.id/"><i data-feather="globe"></i></a>
+        <a href="https://www.facebook.com/" class="mx-2"><i data-feather="facebook"></i></a>
+        <a href="https://www.instagram.com/" class="mx-2"><i data-feather="instagram"></i ></a>
+        <a href="https://www.google.co.id/" class="mx-2"><i data-feather="globe"></i></a>
         <!-- </ul> -->
       </div>
     </div>

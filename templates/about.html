@@ -70,8 +70,7 @@
         <div class="container-fluid pt-5">
             <div class="container">
                 <div class="clearfix pt-5">
-                    <img src="{{ url_for('static', filename='assets/perpustakaan.jpg') }}" class="img-fluid col-md-6 float-md-end crop-img px-5" width="300"
-                        height="300" />
+                    <img src="{{ url_for('static', filename='assets/perpustakaan.jpg') }}" class="img-fluid float-md-end mb-4" />
                     <h1>About Us</h1>
                     <p>
                         Welcome to e-Perpus, an innovative online library designed to meet your literacy and knowledge needs. 
@@ -129,22 +128,28 @@
                 <div class="fasilitas">
                     <h1 class="pb-2">Facilities</h1>
                     <div class="row">
-                        <div class="fasilitas-col">
-                            <img src="{{ url_for('static', filename='assets/ruang_baca.jpg') }}">
-                            <div class="layer">
-                                <h3>Reading Room</h3>
+                        <div class="col-md-4 col-12 mb-3">
+                            <div class="position-relative">
+                                <img src="{{ url_for('static', filename='assets/ruang_baca.jpg') }}" class="w-100 img-fluid" alt="Reading Room">
+                                <div class="position-absolute top-50 start-50 translate-middle text-white layer">
+                                    <h3>Reading Room</h3>
+                                </div>
                             </div>
                         </div>
-                        <div class="fasilitas-col">
-                            <img src="{{ url_for('static', filename='assets/buku.jpg') }}">
-                            <div class="layer">
-                                <h3>Book Collection</h3>
+                        <div class="col-md-4 col-12 mb-3">
+                            <div class="position-relative">
+                                <img src="{{ url_for('static', filename='assets/buku.jpg') }}" class="w-100 img-fluid" alt="Book Collection">
+                                <div class="position-absolute top-50 start-50 translate-middle text-white layer">
+                                    <h3>Book Collection</h3>
+                                </div>
                             </div>
                         </div>
-                        <div class="fasilitas-col">
-                            <img src="{{ url_for('static', filename='assets/rb.jpg') }}">
-                            <div class="layer">
-                                <h3>Hotspot Area</h3>
+                        <div class="col-md-4 col-12 mb-3">
+                            <div class="position-relative">
+                                <img src="{{ url_for('static', filename='assets/rb.jpg') }}" class="w-100 img-fluid" alt="Hotspot Area">
+                                <div class="position-absolute top-50 start-50 translate-middle text-white layer">
+                                    <h3>Hotspot Area</h3>
+                                </div>
                             </div>
                         </div>
                     </div>
