@@ -121,7 +121,7 @@
     <section class="artikel_area section_gap py-5" id="artikelsection" style="min-height:100vh">
         <div class="container">
             <div class="mb-5">
-                <h3 class="text-center fw-bold judulkategori">Book Return List</h3>
+                <h3 class="text-center fw-bold judulkategori">Daftar Pengembalian Buku</h3>
                 <hr class="mx-auto">
             </div>
             <div class="wrapper-riwayat" id="cards-box">
@@ -131,9 +131,9 @@
                     <div class="row g-0">
                         <div class="col-8 col-md-9 col-lg-10">
                             <div class="card-body">
-                                <h5 class="card-title">{{ data['peminjaman']['nama'] }}</h5>
-                                <p class="card-text fw-bold">{{ data['book']['judul'] }}</p>
-                                <p class="card-text fw-bold"> Borrowed Date : <small
+                                <h5 class="card-name">{{ data['peminjaman']['nama'] }}</h5>
+                                <p class="card-title fw-bold">{{ data['book']['judul'] }}</p>
+                                <p class="card-text fw-bold"> Tanggal Pinjam : <small
                                         class="text-muted">{{ data['peminjaman']['tgl_pinjam'] }}</small>
                                     {% if data['peminjaman']['status'] == 3 %}
                                         <p style="color: red;">{{ data['status_pengembalian'] }}</p>
@@ -144,13 +144,13 @@
                         <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center">
                             <div class="card-body">
                                 {% if data['peminjaman']['status'] == 1 %}
-                                    <button type="button" class="btn btn-primary btnriwayat shadow-sm"
-                                    onclick="showReturnModal(`{{ data['peminjaman']['id'] }}`)">Return</button>
+                                    <button type="button" class="btn btn-primary btnriwayat shadow-sm" style="font-size: 12px;"
+                                    onclick="showReturnModal(`{{ data['peminjaman']['id'] }}`)">Mengembalikan</button>
                                 {% elif data['peminjaman']['status'] == 3 %}
                                     {% if 'pengembalian' in data %}
-                                        <p style="color: green;">Returned on {{ data['pengembalian']['tgl_kembali'] }}</p>
+                                        <p style="color: green; font-size: 12px;">Dikembalikan pada {{ data['pengembalian']['tgl_kembali'] }}</p>
                                     {% else %}
-                                        <p style="color: red;">Return date not available</p>
+                                        <p style="color: red; ">Tanggal pengembalian tidak tersedia</p>
                                     {% endif %}
                                 {% endif %}
                             </div>
@@ -166,10 +166,10 @@
     <div class="modal-background" onclick="$('#deskripsi').removeClass('is-active')"></div>
     <div class="modal-content">
         <div class="box">
-            <h4 class="text-center">Return Date</h4>
+            <h4 class="text-center">Tanggal Kembali</h4>
                 <form>
                     <div class="mb-4">
-                        <label for="tgl_kembali" class="form-label">Return Date</label>
+                        <label for="tgl_kembali" class="form-label">Tanggal Kembali</label>
                         <input type="date" class="form-control" id="tgl_kembali" placeholder="Return Date">
                     </div>
                     <input type="hidden" id="bookId">

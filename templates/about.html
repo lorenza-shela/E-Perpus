@@ -70,48 +70,56 @@
         <div class="container-fluid pt-5">
             <div class="container">
                 <div class="clearfix pt-5">
-                    <img src="{{ url_for('static', filename='assets/perpustakaan.jpg') }}" class="img-fluid float-md-end mb-4" />
-                    <h1>About Us</h1>
-                    <p>
-                        Welcome to e-Perpus, an innovative online library designed to meet your literacy and knowledge needs. 
-                        e-Perpus serves as a bridge between readers and the world of knowledge by providing easy and fast access to a wide range of literary resources. 
-                        At e-Perpus, you can enjoy a rich and diverse collection of digital books, covering various genres, famous authors, and interesting topics. 
-                        With a user-friendly layout, we make it easy for you to browse and discover books that match your interests and needs.
+                    <img src="{{ url_for('static', filename='assets/perpustakaan.jpg') }}" class="img-fluid float-md-end mb-4" style="margin-left: 20px;"/>
+                    <h1>Tentang Kami</h1>
+                    <p style="text-align: justify;">
+                        Selamat datang di e-Perpus, perpustakaan daring inovatif yang dirancang untuk memenuhi kebutuhan
+                        literasi dan pengetahuan Anda. e-Perpus menjadi jembatan antara pembaca dan dunia pengetahuan
+                        dengan menyediakan akses mudah dan cepat ke berbagai sumber daya literatur.
+                        Di e-Perpus, Anda dapat menikmati koleksi buku digital yang kaya dan beragam, mencakup berbagai
+                        genre, penulis terkenal, dan topik menarik. Dengan tata letak yang ramah pengguna, kami
+                        memudahkan Anda untuk menjelajahi dan menemukan buku yang sesuai dengan minat dan kebutuhan
+                        Anda.
                     </p>
                 </div>
 
                 <div class="tartib pt-5 pb-2" style="text-align: center;">
                     <div class="tartib-row">
                         <div class="tartib-col">
-                            <h3>Rules</h3>
+                            <h3>Tata Tertib</h3>
                             <p>
                             <ol style="text-align: left;">
-                                <li>Operating Hours :
+                                <li>Jam Operasional:
                                     <ul>
-                                        <li>E-Perpus is open every day.</li>
-                                        <li>Customer service is available during specific operating hours.</li>
+                                        <li>E-Perpus buka setiap hari selama 24 jam.</li>
+                                        <li>Customer service online tersedia pada jam operasional tertentu.</li>
                                     </ul>
                                 </li>
-                                <li>Membership :
+                                <li>Keanggotaan :
                                     <ul>
-                                        <li>All users are required to register and create an account to access e-perpus service</li>
-                                        <li>Providing false information or engaging in fraudulent activites is permitted</li>
+                                        <li>Setiap pengguna wajib mendaftar dan membuat akun untuk mengakses layanan
+                                            e-Perpus.</li>
+                                        <li>Tidak diperkenankan melakukan tindakan atau memberikan informasi palsu.</li>
                                     </ul>
                                 </li>
-                                <li>Borrowing and Returning :
+                                <li>Peminjaman dan Pengembalian:
                                     <ul>
-                                        <li>Digital book borrowing can be done using the prescribed borrowing system.</li>
-                                        <li>Books must be returned within the set time limt</li>
+                                        <li>Peminjaman buku digital dapat dilakukan dengan menggunakan sistem peminjaman
+                                            yang telah ditentukan.</li>
+                                        <li>Pengembalian buku harus dilakukan sesuai dengan batas waktu yang ditetapkan.
+                                        </li>
                                     </ul>
                                 </li>
-                                <li>Late Fees :
+                                <li>Keterlambatan dan Denda :
                                     <ul>
-                                        <li>Late book returns may incur fines according to the applicable rules.</li>
+                                        <li>Keterlambatan pengembalian buku dapat dikenakan denda sesuai dengan
+                                            peraturan yang berlaku.</li>
                                     </ul>
                                 </li>
-                                <li>Complaints :
+                                <li>Pengaduan
                                     <ul>
-                                        <li>Any complaints can be submitted through the provided complaint system.</li>
+                                        <li>Segala keluhan dapat disampaikan melalui sistem pengaduan yang telah
+                                            disediakan.</li>
                                     </ul>
                                 </li>
                             </ol>
@@ -126,13 +134,13 @@
 
 
                 <div class="fasilitas">
-                    <h1 class="pb-2">Facilities</h1>
+                    <h1 class="pb-2">Fasilitas</h1>
                     <div class="row">
                         <div class="col-md-4 col-12 mb-3">
                             <div class="position-relative">
                                 <img src="{{ url_for('static', filename='assets/ruang_baca.jpg') }}" class="w-100 img-fluid" alt="Reading Room">
                                 <div class="position-absolute top-50 start-50 translate-middle text-white layer">
-                                    <h3>Reading Room</h3>
+                                    <h3>Ruang Baca</h3>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +148,7 @@
                             <div class="position-relative">
                                 <img src="{{ url_for('static', filename='assets/buku.jpg') }}" class="w-100 img-fluid" alt="Book Collection">
                                 <div class="position-absolute top-50 start-50 translate-middle text-white layer">
-                                    <h3>Book Collection</h3>
+                                    <h3>Koleksi Buku</h3>
                                 </div>
                             </div>
                         </div>

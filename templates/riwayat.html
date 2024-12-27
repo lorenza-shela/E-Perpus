@@ -116,8 +116,8 @@
                     $('#deskripsi .card-img-top').attr('src', '../' + book['sampul']);
                     $('#deskripsi .card-title').text(book['judul']);
                     $('#deskripsi .card-text.genre').text(`Genre: ${book['genre']}`);
-                    $('#deskripsi .card-text.tahun').text(`Year: ${book['tahun']}`);
-                    $('#deskripsi .card-text.penulis').text(`Author: ${book['pengarang']}`);
+                    $('#deskripsi .card-text.tahun').text(`Tahun: ${book['tahun']}`);
+                    $('#deskripsi .card-text.penulis').text(`Penulis: ${book['pengarang']}`);
                     $('#deskripsi .nama').val(`${peminjaman['nama']}`);
                     $('#deskripsi .alamat').val(`${peminjaman['alamat']}`);
                     $('#deskripsi .telp').val(`${peminjaman['no_telp']}`);
@@ -127,16 +127,16 @@
 
                     // Ganti kondisi untuk menetapkan status
                     if (peminjaman['status'] === 0) {
-                        $('#deskripsi .status').val(`Waiting`);
+                        $('#deskripsi .status').val(`Pending`);
                         $('#deskripsi .status').addClass('btn btn-warning btnriwayat shadow-sm hidden');
                         $('#deskripsi .status').addClass('text-dark');
                         // $('#deskripsi .status').css('color', 'black');
                     } else if (peminjaman['status'] === 1) {
-                        $('#deskripsi .status').val(`Approved`);
+                        $('#deskripsi .status').val(`Buku Tersedia`);
                         $('#deskripsi .status').addClass('btn btn-success btnriwayat shadow-sm hidden');
                         $('#deskripsi .status').addClass('text-dark');
                     } else{
-                        $('#deskripsi .status').val(`Rejected`);
+                        $('#deskripsi .status').val(`Buku Tidak Tersedia`);
                         $('#deskripsi .status').addClass('btn btn-danger btnriwayat shadow-sm hidden');
                         $('#deskripsi .status').addClass('text-dark');
                     }
@@ -164,7 +164,7 @@
     <section class="artikel_area section_gap py-5" id="artikelsection" style="min-height:100vh">
         <div class="container">
             <div class="mb-5">
-                <h3 class="text-center fw-bold judulkategori">Borrowing History</h3>
+                <h3 class="text-center fw-bold judulkategori">Riwayat Peminjaman</h3>
 
                 <hr class="mx-auto">
             </div>
@@ -176,11 +176,11 @@
                         <div class="col-8 col-md-9 col-lg-10">
                             <div class="card-body">
                                 <h5 class="card-title">{{ data['book']['judul'] }}</h5>
-                                <p class="card-text fw-bold">Borrowing Date :   <small class="text-muted">{{ data['peminjaman']['tgl_pinjam']}}</small></p>
+                                <p class="card-text fw-bold">Tanggal Pinjam :   <small class="text-muted">{{ data['peminjaman']['tgl_pinjam']}}</small></p>
                                 {% if data['peminjaman']['status'] == 1 %}
-                                    <p class="card-text fw-bold">Max return date :   <small class="text-muted">{{ data['peminjaman']['tgl_kembali']}}</small></p>
+                                    <p class="card-text fw-bold">Maks kembali tanggal :   <small class="text-muted">{{ data['peminjaman']['tgl_kembali']}}</small></p>
                                 {% elif data['peminjaman']['status'] == 3  %} 
-                                    <p style="color: green;">has been returned on   <small style="color: green;">{{ data['pengembalian']['tgl_kembali']}}</small>
+                                    <p style="color: green;">Telah dikembalikan pada   <small style="color: green;">{{ data['pengembalian']['tgl_kembali']}}</small>
                                     {% if data['peminjaman']['status'] == 3 %}
                                         <p style="color: red;">{{ data['status_pengembalian'] }}</p>
                                     {% endif %}
@@ -191,11 +191,13 @@
                         <div class="col-4 col-md-3 col-lg-2 d-flex align-items-center">
                             <div class="card-body">
                                 {% if data['peminjaman']['status'] == 0 %}
-                                    <button onclick="showInfo(`{{ data['peminjaman']['id'] }}`)" class="btn btn-outline-warning btnriwayat shadow-sm">Waiting</button>
+                                    <button onclick="showInfo(`{{ data['peminjaman']['id'] }}`)" class="btn btn-outline-warning btnriwayat shadow-sm">Pending</button>
                                 {% elif data['peminjaman']['status'] == 1 %}
-                                    <button onclick="showInfo(`{{ data['peminjaman']['id'] }}`)" class="btn btn-outline-success btnriwayat shadow-sm">Approved</button>
+                                    <button onclick="showInfo(`{{ data['peminjaman']['id'] }}`)" class="btn btn-outline-success btnriwayat shadow-sm">Diterima</button>
+                                    <p style="color: green; font-size: 14px; text-align: center; margin-top: 10px;">Buku Tersedia</p>
                                 {% elif data['peminjaman']['status'] == 2 %}
-                                    <button onclick="showInfo(`{{ data['peminjaman']['id'] }}`)" class="btn btn-outline-danger btnriwayat shadow-sm">Rejected</button>
+                                    <button onclick="showInfo(`{{ data['peminjaman']['id'] }}`)" class="btn btn-outline-danger btnriwayat shadow-sm">Ditolak</button>
+                                    <p style="color: red; font-size: 14px; text-align: center; margin-top: 10px;">Buku Tidak Tersedia</p>
                                 {% endif %}
                             </div>
                         </div>
@@ -230,29 +232,29 @@
                                 <div class="col-md-8">
                                     <div class="card shadow h-100">
                                         <div class="card-body">
-                                            <h5 class="card-title">Borrowing Details</h5>
+                                            <h5 class="card-title">Detail Peminjaman</h5>
                                                 <div class="field">
-                                                    <label class="label">Borrowing Name</label>
+                                                    <label class="label">Nama Lengkap</label>
                                                     <input class="input nama" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">Address</label>
+                                                    <label class="label">Alamat</label>
                                                     <input class="input alamat" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">Phone Number</label>
+                                                    <label class="label">No. Handphone</label>
                                                     <input class="input telp" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">Borrow Date</label>
+                                                    <label class="label">Tanggal Pinjam</label>
                                                     <input class="input tgl_pinjam" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">Return Date</label>
+                                                    <label class="label">Tanggal Kembali</label>
                                                     <input class="input tgl_kembali" type="text" readonly>
                                                 </div>
                                                 <div class="field">
-                                                    <label class="label">Notes</label>
+                                                    <label class="label">Catatan</label>
                                                     <textarea class="textarea catatan" readonly></textarea>
                                                 </div>
                                                 <div class="field">

@@ -80,7 +80,7 @@
     <section class="artikel_area section_gap py-5" id="artikelsection" style="min-height:100vh">
         <div class="container">
             <div class="mb-5">
-                <h3 class="text-center fw-bold judulkategori">Inbox</h3>
+                <h3 class="text-center fw-bold judulkategori">Pesan</h3>
                 <hr class="mx-auto">
             </div>
             <div class="wrapper-riwayat" id="cards-box">
@@ -91,15 +91,15 @@
                             <div class="card-body d-flex justify-content-between align-items-center">
                               <div>
                                 <h5 class="card-title">{{ contact.nama_lengkap }}</h5>
-                                <p class="card-text">Phone Number : <a href="https://wa.me/{{ contact.no_hp }}?text=Hallo%20kami%20dari%20E-Perpus,%20Apakah%20ada%20yang%20bisa%20dibantu?" target="_blank">{{ contact.no_hp }}</a></p>
-                                <p class="card-text"> Message : {{ contact.pesan }}</p>
+                                <p class="card-text">No. Handphone : <a href="https://wa.me/{{ contact.no_hp }}?text=Hallo%20kami%20dari%20E-Perpus,%20Apakah%20ada%20yang%20bisa%20dibantu?" target="_blank">{{ contact.no_hp }}</a></p>
+                                <p class="card-text"> Pesan : {{ contact.pesan }}</p>
                                 <p class="text-muted"><small>{{contact.tanggal_kirim}}</small></p>
                               </div>
                               <div>
                                   {% if contact.status == 0 %}
-                                      <button class="btn btn-primary" onclick="markAsResponded('{{ contact.id}}')">Mark as Responded</button>
+                                      <button class="btn btn-primary" onclick="markAsResponded('{{ contact.id}}')">Tandai telah dibaca</button>
                                   {% else %}
-                                      <p class="text-success">Message has been responded</p>
+                                      <p class="text-success">Pesan telah dibaca</p>
                                   {% endif %}
                                 </div>
                             </div>

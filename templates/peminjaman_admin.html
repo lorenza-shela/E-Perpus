@@ -121,9 +121,9 @@
                     $('#deskripsi .card-img-top').attr('src', '../' + book['sampul']);
                     $('#deskripsi .card-title').text(book['judul']);
                     $('#deskripsi .card-text.genre').text(`Genre: ${book['genre']}`);
-                    $('#deskripsi .card-text.tahun').text(`Year: ${book['tahun']}`);
-                    $('#deskripsi .card-text.penulis').text(`Author: ${book['pengarang']}`);
-                    $('#deskripsi .card-text.stok').html(`<strong>Stock : ${book['stok']}</strong>`);
+                    $('#deskripsi .card-text.tahun').text(`Tahun: ${book['tahun']}`);
+                    $('#deskripsi .card-text.penulis').text(`Penulis: ${book['pengarang']}`);
+                    $('#deskripsi .card-text.stok').html(`<strong>Stok : ${book['stok']}</strong>`);
                     $('#deskripsi .nama').val(`${peminjaman['nama']}`);
                     $('#deskripsi .alamat').val(`${peminjaman['alamat']}`);
                     $('#deskripsi .telp').val(`${peminjaman['no_telp']}`);
@@ -213,7 +213,7 @@
     <section class="artikel_area section_gap py-5" id="artikelsection" style="min-height:100vh">
         <div class="container">
             <div class="mb-5">
-                <h3 class="text-center fw-bold judulkategori">Book Borrowing List</h3>
+                <h3 class="text-center fw-bold judulkategori">Daftar Peminjaman Buku</h3>
                 <hr class="mx-auto">
             </div>
             <div class="wrapper-riwayat" id="cards-box">
@@ -225,11 +225,11 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ data['peminjaman']['nama'] }}</h5>
                                 <p class="card-text fw-bold">{{ data['book']['judul'] }}</p>
-                                <p class="card-text fw-bold"> Borrowing Date : <small
+                                <p class="card-text fw-bold"> Tanggal Pinjam : <small
                                         class="text-muted">{{ data['peminjaman']['tgl_pinjam'] }}</small>
                                 </p>
                                 <!-- {% if data['peminjaman']['status'] == 0 %} -->
-                                    <p class="card-text"> Stock : {{ data['book']['stok'] }}</p>
+                                    <p class="card-text"> Stok : {{ data['book']['stok'] }}</p>
                                 <!-- {% endif %} -->
                             </div>
                         </div>
@@ -240,10 +240,10 @@
                                     onclick="showInfo(`{{ data['peminjaman']['id'] }}`)">Details</button>
                                 {% elif data['peminjaman']['status'] == 1 %}
                                     <button type="button" class="btn btn-success btnriwayat shadow-sm"
-                                    onclick="showInfo(`{{ data['peminjaman']['id'] }}`)">Approved</button>
+                                    onclick="showInfo(`{{ data['peminjaman']['id'] }}`)">Diterima</button>
                                 {% elif data['peminjaman']['status'] == 2 %}
                                     <button type="button" class="btn btn-danger btnriwayat shadow-sm"
-                                    onclick="showInfo(`{{ data['peminjaman']['id'] }}`)">Rejected</button>
+                                    onclick="showInfo(`{{ data['peminjaman']['id'] }}`)">Ditolak</button>
                                 {% endif %}
                             </div>
                         </div>
@@ -276,7 +276,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-8">
-                                                            <h4>Borrowing Details</h4>
+                                                            <h4>Detail Peminjaman</h4>
                                                             <form>
                                                                 <div class="mb-3">
                                                                     <input type="text" class="form-control nama" id="nama"
@@ -298,7 +298,7 @@
                                                                 </div>
                                                                 <div class="mb-3">
                                                                     <label for="tgl_pinjam"
-                                                                        class="form-label">Borrowing Date</label>
+                                                                        class="form-label">Tanggal Pinjam</label>
                                                                     <input type="date" class="form-control tgl-pinjam" id="tgl_pinjam"
                                                                         placeholder="Tanggal Pinjam"
                                                                         style="border: 2px solid grey;" value="Waiting"
@@ -306,7 +306,7 @@
                                                                 </div>
                                                                 <div class="mb-3">
                                                                     <label for="tgl_kembali"
-                                                                        class="form-label">Return Date</label>
+                                                                        class="form-label">Tanggal Kembali</label>
                                                                     <input type="date" class="form-control tgl-kembali" id="tgl_kembali"
                                                                         placeholder="Tanggal Kembali"
                                                                         style="border: 2px solid grey;" value="Waiting"
@@ -314,7 +314,7 @@
                                                                 </div>
                                                                 <div class="mb-3">
                                                                     <label for="catatan"
-                                                                        class="form-label">Notes</label>
+                                                                        class="form-label">Catatan</label>
                                                                         <br>
                                                                     <textarea class="form-control catatan" placeholder="Catatan"
                                                                         id="catatan"
@@ -327,8 +327,8 @@
                                                                       Action
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-dark">
-                                                                      <li><a class="dropdown-item active accept" href="#">Approve</a></li>
-                                                                      <li><a class="dropdown-item reject" href="#">Reject</a></li>
+                                                                      <li><a class="dropdown-item active accept" href="#">Diterima</a></li>
+                                                                      <li><a class="dropdown-item reject" href="#">Ditolak</a></li>
                                                                     </ul>
                                                                 </div>
                                                                 <!-- <div class="btn-group">

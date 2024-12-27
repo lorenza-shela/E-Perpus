@@ -31,7 +31,7 @@ ADMIN_KEY = 'lala'
 # client = MongoClient(MONGODB_URI)
 # db = client[DB_NAME]
 
-MONGODB_CONNECTION_STRING = 'mongodb://fannywibi0:group2fplx@ac-gpgzvf0-shard-00-00.fj4lge4.mongodb.net:27017,ac-gpgzvf0-shard-00-01.fj4lge4.mongodb.net:27017,ac-gpgzvf0-shard-00-02.fj4lge4.mongodb.net:27017/?ssl=true&replicaSet=atlas-j112oa-shard-0&authSource=admin&retryWrites=true&w=majority'
+MONGODB_CONNECTION_STRING = 'mongodb+srv://lorenza:test@cluster0.dlbmu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 client = MongoClient(MONGODB_CONNECTION_STRING)
 db = client.perpustakan
 
@@ -109,7 +109,7 @@ def peminjaman(id):
         
         # Pengecekan KTP
         if not user_info.get('ktp_pic_real') or not user_info.get('profile_info'):
-            msg = "Please complete your personal data."
+            msg = "Lengkapi data diri anda."
             return redirect(url_for('profil', username=payload['id'], msg=msg))
           
         return render_template('peminjaman.html', find_book=find_book, user_info=user_info)
@@ -300,8 +300,8 @@ def riwayat(username):
                     # Menentukan apakah pengembalian tepat waktu atau terlambat
                     if tgl_kembali_pengembalian > tgl_kembali_peminjaman:
                         selisih_hari = (tgl_kembali_pengembalian - tgl_kembali_peminjaman).days
-                        denda = selisih_hari * 500
-                        combined_entry['status_pengembalian'] = f"Returns over {selisih_hari} days, Fine : {selisih_hari} x 500 = Rp {denda}"
+                        denda = selisih_hari * 5000
+                        combined_entry['status_pengembalian'] = f"Pengembalian lebih dari {selisih_hari} Hari, Denda : {selisih_hari} x 5000 = Rp {denda}"
 
                 combined_data.append(combined_entry)
             # if book_data:
@@ -486,8 +486,8 @@ def pengembalian_admin():
                     # Menentukan apakah pengembalian tepat waktu atau terlambat
                     if tgl_kembali_pengembalian >= tgl_kembali_peminjaman:
                         selisih_hari = (tgl_kembali_pengembalian - tgl_kembali_peminjaman).days
-                        denda = selisih_hari * 500
-                        combined_entry['status_pengembalian'] = f"Returns over {selisih_hari} days, Fine : {selisih_hari} x 500 = Rp {denda}"
+                        denda = selisih_hari * 5000
+                        combined_entry['status_pengembalian'] = f"Pengembalian lebih dari {selisih_hari} Hari, Denda : {selisih_hari} x 5000 = Rp {denda}"
 
                 combined_data.append(combined_entry)
 
@@ -521,11 +521,11 @@ def return_book(bookId):
                 'tgl_kembali': return_Date
             }
             db.pengembalian.insert_one(doc)
-            return jsonify({'msg': 'Successful Return!'})
+            return jsonify({'msg': 'Berhasil dikembalikan!'})
         else:
-            return jsonify({'msg':'Books are not found!'})
+            return jsonify({'msg':'Buku tidak ditemukan!'})
     else:
-        return jsonify({'msg':'Borrowing not found!'}) 
+        return jsonify({'msg':'Peminjaman tidka ditemukan!'}) 
       
 # @app.route("/update_profile", methods=["POST"])
 # def save_img():
@@ -723,7 +723,7 @@ def up_profil():
         db.user.update_one(
             {"username": payload["id"]}, 
             {"$set": new_doc})
-        return jsonify({"result": "success", "msg": "Profile Updated!"})
+        return jsonify({"result": "success", "msg": "Profil di update!"})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -812,7 +812,7 @@ def contact():
                 "status" : 0,
             }
             db.contact.insert_one(doc)
-            return jsonify({"result": "success", "msg": "Message sent successfully!"})
+            return jsonify({"result": "success", "msg": "Pesan berhasil terkirim!"})
         else:
             return render_template("contact.html",user_info=user_info)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):

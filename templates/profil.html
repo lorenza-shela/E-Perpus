@@ -56,7 +56,7 @@
                 if (response["result"] === "success"){
                     Swal.fire({
                         title: "Success!",
-                        text: "Profile Updated Successfully!",
+                        text: "Profil berhasil di update!",
                         icon: "success",
                         confirmButtonText: "OK"
                     }).then(() => {
@@ -125,7 +125,7 @@
         <div class="kategoricaption mb-5">
             <div class="row">
                 <div class="col">
-                    <h1 class="text-center judulkategori">Profile</h1>
+                    <h1 class="text-center judulkategori">Profil</h1>
                     <hr>
 
                 </div>
@@ -148,7 +148,7 @@
                 <div class="profile-button d-flex flex-column gap-3 mt-5">
                     <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
                         data-bs-target="#editProfil">Edit
-                        Profile</button>
+                        Profil</button>
                     <button class="btn btn-outline-primary w-100" onclick="logout()">Logout</button>
                 </div>
                 {% endif %}
@@ -166,40 +166,40 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="nama" class="form-label">Full Name</label>
+                        <label for="nama" class="form-label">Nama Lengkap</label>
                         <input type="text" class="form-control" id="nama" name="nama"
                             placeholder="Enter Yout Full Name" value="{{user_data.name}}" required>
                     </div>
                     <div class="mb-3"><img class="is-70x70" src="{{ url_for('static', filename=user_data.profile_pic_real)}}"></div>
                     <div class="mb-3">
-                        <label for="foto_profil" class="form-label">Photo Profile</label>
+                        <label for="foto_profil" class="form-label">Foto Profil</label>
                         <input type="file" class="form-control" id="foto_profil" name="foto_profil" required>
                     </div>
                     <!-- Penambahan foto ktp -->
                     <div class="mb-3"><img class="is-70x70" src="{{ url_for('static', filename=user_data.ktp_pic_real)}}"></div>
                     <div class="mb-3">
-                        <label for="foto_ktp" class="form-label">Photo KTP</label>
+                        <label for="foto_ktp" class="form-label">Foto KTP</label>
                         <input type="file" class="form-control" id="foto_ktp" name="foto_ktp" required>
                     </div>
                     <div class="mb-3">
-                        <label for="deskripsi_profil" class="form-label">Profile Description</label>
+                        <label for="deskripsi_profil" class="form-label">Deskripsi Profil</label>
                         <textarea class="form-control" id="deskripsi_profil" name="deskripsi_profil" rows="4"
                             required>{{ user_data.profile_info }}</textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="alamat" class="form-label">Address</label>
+                        <label for="alamat" class="form-label">Alamat</label>
                         <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Enter Your Address"
                         >{{ user_data.alamat }}</textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="telepon" class="form-label">Phone Number</label>
+                        <label for="telepon" class="form-label">No. Handphone</label>
                         <input type="tel" class="form-control" id="telepon" name="telepon" placeholder="Enter Your Phone Number" 
                         value="{{ user_data.telepon }}">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="update_profile()">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="update_profile()">Simpan</button>
                 </div>
             </div>
         </div>
